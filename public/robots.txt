@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+
+# link pro sitemap
+Sitemap: https://www.investglobal.us/sitemap.xml
