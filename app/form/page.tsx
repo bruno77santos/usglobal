@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import InputLabel from '@/compartilhados/inputLabel'
+import InputLabel from '@/components/compartilhados/inputLabel'
 
 
 export default function Form() {
