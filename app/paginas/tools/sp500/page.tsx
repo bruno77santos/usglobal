@@ -1,4 +1,4 @@
-    'use client';
+'use client';
 
 import { useState } from "react";
 import { Bar } from "react-chartjs-2";
@@ -8,13 +8,23 @@ import {
     CategoryScale,
     LinearScale,
     Tooltip,
-    Legend
+    Legend,
+    ChartOptions
 } from "chart.js";
 import InputLabel from '@/components/compartilhados/inputLabel';
 import { Hero } from "@/components/paginas/tools/sp500/hero";
 import InputLabelSelect from "@/components/compartilhados/inputLabelSelect";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+
+type FormData = {
+  Nome?: string;
+  Email?: string;
+  Phone?: string;
+  investeNaXP?: string;
+  quantoTemInvestido?: string;
+  investeNoExterior?: string;
+};
 
 export default function SEP() {
     const [valorInicial, setValorInicial] = useState<number>(0);
@@ -23,27 +33,20 @@ export default function SEP() {
     const [frequencia, setFrequencia] = useState<string>("mensal");
     const [resultadoSP500, setResultadoSP500] = useState<number | null>(null);
     const [resultadoIbovespa, setResultadoIbovespa] = useState<number | null>(null);
-
     const [simulator, setSimulator] = useState(false);
-    const [showModal, setShowModal] = useState(false);  // Controle do modal
+    const [showModal, setShowModal] = useState(false);
 
-    const taxaSP500 = 0.13; // 10% ao ano
-    const taxaIbovespa = 0.075; // 7,5% ao ano
+    const taxaSP500 = 0.13;
+    const taxaIbovespa = 0.075;
 
-type FormData = {
-  [key: string]: any;
-};
+    const [formData, setFormData] = useState<FormData>({});
 
-const [formData, setFormData] = useState<FormData>({});
-
-    // Atualiza o estado ao selecionar uma resposta
- const handleChange = (name: string, value: any) => {
-  setFormData(prevData => ({
-    ...prevData,
-    [name]: value,
-  }));
-};
-
+    const handleChange = (name: keyof FormData, value: string) => {
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     const handleSubmit = async () => {
         try {
@@ -61,9 +64,7 @@ const [formData, setFormData] = useState<FormData>({});
                 }),
             });
 
-            if (response.ok) {
-
-            } else {
+            if (!response.ok) {
                 console.error("Erro ao enviar formulário:", response.statusText);
                 alert("Erro ao enviar formulário.");
             }
@@ -88,12 +89,8 @@ const [formData, setFormData] = useState<FormData>({});
                 return montante;
             };
 
-            const valorFinalSP500 = calcularComAportes(taxaMensalSP500);
-            const valorFinalIbovespa = calcularComAportes(taxaMensalIbovespa);
-
-            setResultadoSP500(valorFinalSP500);
-            setResultadoIbovespa(valorFinalIbovespa);
-
+            setResultadoSP500(calcularComAportes(taxaMensalSP500));
+            setResultadoIbovespa(calcularComAportes(taxaMensalIbovespa));
         } else {
             setResultadoSP500(null);
             setResultadoIbovespa(null);
@@ -102,7 +99,7 @@ const [formData, setFormData] = useState<FormData>({});
 
     const handleModalSubmit = () => {
         setShowModal(false);
-        setSimulator(true); // Liberar a simulação após inserir o e-mail
+        setSimulator(true);
     };
 
     const data = {
@@ -116,7 +113,7 @@ const [formData, setFormData] = useState<FormData>({});
         ]
     };
 
-    const options: any = {
+    const options: ChartOptions<"bar"> = {
         responsive: true,
         indexAxis: 'y',
         plugins: {

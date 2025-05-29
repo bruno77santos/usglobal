@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import InputRadio from '@/components/compartilhados/inputRadio';
+{/*import InputRadio from '@/components/compartilhados/inputRadio';*/}
 import Hero from '@/components/paginas/tools/profile/hero';
 import InputLabel from '@/components/compartilhados/inputLabel';
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { TrendingUp, ShieldCheck, Globe } from 'lucide-react';
-import Image from 'next/image';
+
 
 export function SectionTen() {
   const panels = [
