@@ -25,8 +25,8 @@ export default function SaidaFiscal() {
     const [showModal, setShowModal] = useState(false);  // Controle do modal
 
     // Atualiza o estado ao selecionar uma resposta
-    const handleChange = (name: any, value: any) => {
-        setFormData((prevData: any) => ({
+  const handleChange = (name: keyof FormData | string, value: string) => {
+    setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));

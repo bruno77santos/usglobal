@@ -30,16 +30,19 @@ export default function SEP() {
     const taxaSP500 = 0.13; // 10% ao ano
     const taxaIbovespa = 0.075; // 7,5% ao ano
 
+type FormData = {
+  [key: string]: any;
+};
 
-    const [formData, setFormData] = useState({}) as any
+const [formData, setFormData] = useState<FormData>({});
 
     // Atualiza o estado ao selecionar uma resposta
-    const handleChange = (name: any, value: any) => {
-        setFormData((prevData: any) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+ const handleChange = (name: string, value: any) => {
+  setFormData(prevData => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
 
 
     const handleSubmit = async () => {
