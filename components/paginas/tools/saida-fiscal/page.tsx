@@ -1,9 +1,11 @@
 'use client'
 
 import { useState } from "react";
-import InputRadio from "./inputRadio";
+import InputLabel from '@/components/compartilhados/inputLabel'
+import InputRadio from '@/components/compartilhados/inputRadio'
+
 import Hero from '../profile/hero';
-import InputLabel from "../inputLabel";
+
 
 export default function SaidaFiscal() {
 
