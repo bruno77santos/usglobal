@@ -1,17 +1,31 @@
 'use client';
 
 import { useState } from 'react';
-import InputLabel from '@/components/compartilhados/inputLabel'
+import InputLabel from '@/components/compartilhados/inputLabel';
 
+interface FormData {
+  Nome: string;
+  Email: string;
+  Phone: string;
+  investeNaXP: string;
+  quantoTemInvestido: string;
+  investeNoExterior: string;
+}
 
 export default function Form() {
-
   const [sendForm, setSendForm] = useState(false);
 
-  const [formData, setFormData] = useState({}) as any;
-  // Atualiza o estado ao selecionar uma resposta
-  const handleChange = (name: any, value: any) => {
-    setFormData((prevData: any) => ({
+  const [formData, setFormData] = useState<FormData>({
+    Nome: '',
+    Email: '',
+    Phone: '',
+    investeNaXP: '',
+    quantoTemInvestido: '',
+    investeNoExterior: '',
+  });
+
+  const handleChange = (name: keyof FormData, value: string) => {
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -34,13 +48,11 @@ export default function Form() {
       });
 
       if (response.ok) {
-
         window.open('/Guia_LiberdadeFinanceira_InvestGlobal.pdf', '_blank', 'noopener,noreferrer');
         setTimeout(() => {
           window.location.href = '/obrigado';
           setSendForm(true);
         }, 2000);
-
       } else {
         console.error('Erro ao enviar formulário:', response.statusText);
         alert('Erro ao enviar formulário.');
@@ -55,18 +67,18 @@ export default function Form() {
     <>
       {sendForm ? (
         <div className="w-full flex items-center justify-center mt-[300px]">
-          <img src="/thanks.png" />
-
+          <img src="/thanks.png" alt="Obrigado" />
         </div>
-
-      ) : (<div className="bg-opacity-50 flex justify-center items-center">
+      ) : (
+        <div className="bg-opacity-50 flex justify-center items-center">
           <div className="bg-slate-700 text-white mt-32 p-8 rounded-md overflow-y-auto">
             <h2 className="text-[24px] font-bold mb-4">Preencha alguns dados</h2>
+
             <div className="flex items-center gap-2">
               <InputLabel
                 type="name"
                 labelTitle="Seu nome"
-                placeholder={'Digite o seu nome'}
+                placeholder="Digite o seu nome"
                 onChange={(e) => handleChange('Nome', e.target.value)}
               />
               <InputLabel
@@ -76,81 +88,84 @@ export default function Form() {
                 onChange={(e) => handleChange('Email', e.target.value)}
               />
             </div>
+
             <br />
+
             <InputLabel
               type="phone"
               labelTitle="Telefone"
-              placeholder={'DD 9 0000-0000'}
+              placeholder="DD 9 0000-0000"
               onChange={(e) => handleChange('Phone', e.target.value)}
             />
 
             <h2 className="text-[24px] font-bold mb-4 mt-6">Investe na XP?</h2>
-            <label htmlFor="investeNaXP" className="flex items-center gap-2">
-              <input name="investeNaXP" type="radio" onChange={() => handleChange('investeNaXP', 'Sim')} />
+            <label className="flex items-center gap-2">
+              <input
+                name="investeNaXP"
+                type="radio"
+                onChange={() => handleChange('investeNaXP', 'Sim')}
+              />
               <p>Sim</p>
             </label>
-            <label htmlFor="investeNaXP" className="flex items-center gap-2">
-              <input name="investeNaXP" type="radio" onChange={() => handleChange('investeNaXP', 'Não')} />
+            <label className="flex items-center gap-2">
+              <input
+                name="investeNaXP"
+                type="radio"
+                onChange={() => handleChange('investeNaXP', 'Não')}
+              />
               <p>Não</p>
             </label>
 
             <h2 className="text-[24px] font-bold mb-4 mt-6">Quanto tem investido?</h2>
-            <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-              <input name="quantoTemInvestido" type="radio"
-                     onChange={() => handleChange('quantoTemInvestido', 'Não tenho investimentos')} />
-              <p>Não tenho investimentos</p>
-            </label>
-
-            <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-              <input name="quantoTemInvestido" type="radio"
-                     onChange={() => handleChange('quantoTemInvestido', 'Abaixo de 100k')} />
-              <p>Abaixo de 100k</p>
-            </label>
-
-            <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-              <input name="quantoTemInvestido" type="radio"
-                     onChange={() => handleChange('quantoTemInvestido', 'Entre 100k e 300k')} />
-              <p>Entre 100k e 300k</p>
-            </label>
-
-            <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-              <input name="quantoTemInvestido" type="radio"
-                     onChange={() => handleChange('quantoTemInvestido', 'Entre 300k a 1milhão')} />
-              <p>Entre 300k a 1milhão</p>
-            </label>
-            <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-              <input name="quantoTemInvestido" type="radio"
-                     onChange={() => handleChange('quantoTemInvestido', 'Acima de 1milhão')} />
-              <p>Acima de 1milhão</p>
-            </label>
+            {[
+              'Não tenho investimentos',
+              'Abaixo de 100k',
+              'Entre 100k e 300k',
+              'Entre 300k a 1milhão',
+              'Acima de 1milhão',
+            ].map((option) => (
+              <label key={option} className="flex items-center gap-2">
+                <input
+                  name="quantoTemInvestido"
+                  type="radio"
+                  onChange={() => handleChange('quantoTemInvestido', option)}
+                />
+                <p>{option}</p>
+              </label>
+            ))}
 
             <h2 className="text-[24px] font-bold mb-4 mt-6">Investe no exterior?</h2>
-
-            <label htmlFor="investeNoExterior" className="flex items-center gap-2">
-              <input name="investeNoExterior" type="radio" onChange={() => handleChange('investeNoExterior', 'Sim')} />
+            <label className="flex items-center gap-2">
+              <input
+                name="investeNoExterior"
+                type="radio"
+                onChange={() => handleChange('investeNoExterior', 'Sim')}
+              />
               <p>Sim</p>
             </label>
-            <label htmlFor="investeNoExterior" className="flex items-center gap-2">
-              <input name="investeNoExterior" type="radio" onChange={() => handleChange('investeNoExterior', 'Não')} />
+            <label className="flex items-center gap-2">
+              <input
+                name="investeNoExterior"
+                type="radio"
+                onChange={() => handleChange('investeNoExterior', 'Não')}
+              />
               <p>Não</p>
             </label>
 
             <label className="flex gap-2 mt-5 text-sm">
               <input type="checkbox" />
-              Estou de acordo com o envio de comunicações, termos e condições e politica da Invest Global Us
+              Estou de acordo com o envio de comunicações, termos e condições e política da Invest Global US
             </label>
 
             <label className="flex gap-2 mt-5 text-sm">
               <input type="checkbox" />
-              Estou de acordo com a politica de privacidade da Invest Global Us
+              Estou de acordo com a política de privacidade da Invest Global US
             </label>
-            <div className="flex justify-between mt-4">
 
+            <div className="flex justify-between mt-4">
               <button
                 className="px-4 py-2 bg-blue-600 text-white rounded-md"
-                onClick={() => {
-                  handleSubmit();
-                }}
+                onClick={handleSubmit}
               >
                 Confirmar
               </button>
@@ -158,8 +173,6 @@ export default function Form() {
           </div>
         </div>
       )}
-
-
     </>
   );
 }
