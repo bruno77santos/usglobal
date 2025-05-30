@@ -13,7 +13,7 @@ export default function Blog() {
               title: "Investimentos nos Estados Unidos: oportunidade...",
               description:
                 "Sabidamente a maior e mais ativa economia do mundo, os Estados Unidos...",
-              articleDetailsLink: "/blog/investimentos-nos-estados-unidos-oportunidade-ou-estratégia",
+              articleDetailsLink: "/blog/investimentos-nos-estados-unidos-oportunidade-ou-estrategia",
               Category: "Categoria",
             },
             {
