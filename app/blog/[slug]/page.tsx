@@ -1,16 +1,7 @@
-//import type { Metadata, ResolvingMetadata } from 'next'
-//import type { InferGetStaticPropsType } from 'next'
 import { notFound } from 'next/navigation'
 import { BlogDetail } from '../d/page'
 
-// ✅ Use PageProps corretos
-type PageProps = {
-  params: {
-    slug: string
-  }
-}
-
-// 🔧 Slugs válidos
+// 🔧 Slugs válidos (slug -> título)
 const SLUG_TO_TITULO: Record<string, string> = {
   'investimentos-nos-estados-unidos-oportunidade-ou-estratégia': 'Investimentos nos Estados Unidos: oportunidade ou estratégia?',
   'enfim-os-americanos-escolheram-trump-e-agora': 'Enfim, os americanos escolheram Trump. E agora?',
@@ -25,13 +16,13 @@ const SLUG_TO_TITULO: Record<string, string> = {
   'estados-unidos-terra-fertil-para-investimentos': 'Estados Unidos: terra fértil para investimentos',
 }
 
-// ✅ Geração de páginas estáticas (SSG)
+// ✅ Rotas estáticas geradas pelo Next no build
 export async function generateStaticParams() {
   return Object.keys(SLUG_TO_TITULO).map((slug) => ({ slug }))
 }
 
-// ✅ Página principal
-export default async function BlogArticle({ params }: PageProps) {
+// ✅ Página do artigo
+export default async function BlogArticle({ params }: { params: { slug: string } }) {
   const titulo = SLUG_TO_TITULO[params.slug]
 
   if (!titulo) return notFound()
