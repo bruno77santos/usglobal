@@ -20,13 +20,13 @@ export default function NavBar() {
   <Link href="/paginas/quem-somos">
     <NavIcon icon={<FileText size={22} />} />
   </Link>
-  <Link href="paginas/blog">
+  <Link href="/paginas/blog">
     <NavIcon icon={<BookOpen size={22} />} />
   </Link>
-  <Link href="paginas/tools">
+  <Link href="/paginas/tools">
     <NavIcon icon={<Users size={22} />} />
   </Link>
-  <Link href="paginas/faqs">
+  <Link href="/paginas/faqs">
     <NavIcon icon={<HelpCircle size={22} />} />
   </Link>
 </div>
