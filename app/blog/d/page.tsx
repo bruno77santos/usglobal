@@ -4,13 +4,14 @@ type BlogDetailType = {
     urlTest: string
 }
 
-export function BlogDetail(props: BlogDetailType) { 
+export function BlogDetail({ urlTest }: BlogDetailType) {
+
 
 
     function content() {
         let result;
 
-        switch (props.urlTest) {
+        switch (urlTest) {
             case 'Investimentos nos Estados Unidos: oportunidade ou estratégia?':
                 result = <>
 

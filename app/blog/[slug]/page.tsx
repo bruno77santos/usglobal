@@ -21,8 +21,13 @@ export async function generateStaticParams() {
   return Object.keys(SLUG_TO_TITULO).map((slug) => ({ slug }))
 }
 
+// ✅ Tipo da página
+type PageProps = {
+  params: { slug: string }
+}
+
 // ✅ Página do artigo
-export default async function BlogArticle({ params }: { params: { slug: string } }) {
+export default async function BlogArticle({ params }: PageProps) {
   const titulo = SLUG_TO_TITULO[params.slug]
 
   if (!titulo) return notFound()
