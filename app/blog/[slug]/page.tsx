@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { BlogDetail } from '../d/page'
 
-// 🔧 Slugs válidos (slug -> título)
+// Slugs válidos
 const SLUG_TO_TITULO: Record<string, string> = {
   'investimentos-nos-estados-unidos-oportunidade-ou-estratégia': 'Investimentos nos Estados Unidos: oportunidade ou estratégia?',
   'enfim-os-americanos-escolheram-trump-e-agora': 'Enfim, os americanos escolheram Trump. E agora?',
@@ -16,18 +16,17 @@ const SLUG_TO_TITULO: Record<string, string> = {
   'estados-unidos-terra-fertil-para-investimentos': 'Estados Unidos: terra fértil para investimentos',
 }
 
-// ✅ Rotas estáticas geradas pelo Next no build
+// Geração estática de rotas (SSG)
 export async function generateStaticParams() {
   return Object.keys(SLUG_TO_TITULO).map((slug) => ({ slug }))
 }
 
-// ✅ Tipo da página
-type PageProps = {
+// Página dinâmica
+export default async function BlogArticle({
+  params,
+}: {
   params: { slug: string }
-}
-
-// ✅ Página do artigo
-export default async function BlogArticle({ params }: PageProps) {
+}) {
   const titulo = SLUG_TO_TITULO[params.slug]
 
   if (!titulo) return notFound()
