@@ -1,17 +1,16 @@
 import Link from 'next/link'
 
-type CardBlog = {
+type CardBlogProps = {
   urlImage: string
   title: string
   description: string
   articleDetailsLink: string
   Category: string
-  key: number
 }
 
-export default function CardBlog(props: CardBlog) {
+export default function CardBlog(props: CardBlogProps) {
   return (
-    <div className="mt-[48px] w-[308px] flex flex-col" key={props.key}>
+    <div className="mt-[48px] w-[308px] flex flex-col">
       <img
         src={props.urlImage}
         alt={props.title}

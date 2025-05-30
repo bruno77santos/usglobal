@@ -13,7 +13,7 @@ export default function Blog() {
               title: "Investimentos nos Estados Unidos: oportunidade...",
               description:
                 "Sabidamente a maior e mais ativa economia do mundo, os Estados Unidos...",
-              articleDetailsLink: "/blog/investimentos-nos-estados-unidos-oportunidade-ou-estrategia",
+              articleDetailsLink: "/blog/artigos/investimentos-nos-estados-unidos-oportunidade-ou-estrategia",
               Category: "Categoria",
             },
             {
@@ -21,7 +21,7 @@ export default function Blog() {
               title: "Enfim, os americanos escolheram Trump. E agora?",
               description:
                 "Um presidente senil, uma vice-presidente polêmica, um magnata contestado...",
-              articleDetailsLink: "/blog/enfim-os-americanos-escolheram-trump-e-agora",
+              articleDetailsLink: "/blog/artigos/enfim-os-americanos-escolheram-trump-e-agora",
               Category: "Categoria",
             },
             {
@@ -29,7 +29,7 @@ export default function Blog() {
               title: "Paraísos fiscais: legalidade e proteção patrimonial",
               description:
                 "Os chamados paraísos fiscais são países ou jurisdições em que há redução ou mesmo...",
-              articleDetailsLink: "/blog/paraisos-fiscais-legitimos-ou-nao",
+              articleDetailsLink: "/blog/artigos/paraisos-fiscais-legitimos-ou-nao",
               Category: "Categoria",
             },
 
@@ -43,7 +43,7 @@ export default function Blog() {
               title: "Como montar uma carteira de investimentos no exterior",
               description:
                 "Instabilidade geopolítica, mudanças sociais, migrações em massa, guerras localizadas...",
-              articleDetailsLink: "/blog/como-montar-uma-carteira-de-investimentos-no-exterior",
+              articleDetailsLink: "/blog/artigos/como-montar-uma-carteira-de-investimentos-no-exterior",
               Category: "Categoria",
             },
             {
@@ -51,7 +51,7 @@ export default function Blog() {
               title: "Meu capital está mesmo seguro fora do país?",
               description:
                 "Essa é uma questão que muitos investidores fazem, pois é naturalmente...",
-              articleDetailsLink: "/blog/meu-capital-esta-mesmo-seguro-fora-do-pais",
+              articleDetailsLink: "/blog/artigos/meu-capital-esta-mesmo-seguro-fora-do-pais",
               Category: "Categoria",
             },
             {
@@ -59,7 +59,7 @@ export default function Blog() {
               title: "Saída fiscal e teoria das bandeiras",
               description:
                 "A saída fiscal é um processo necessário a todos os cidadãos que decidem...",
-              articleDetailsLink: "/blog/deixar-o-pais-teoria-das-bandeiras-de-harry-schultz-e-saida-fiscal-no-brasil",
+              articleDetailsLink: "/blog/artigos/deixar-o-pais-teoria-das-bandeiras-de-harry-schultz-e-saida-fiscal-no-brasil",
               Category: "Categoria",
             },
             {
@@ -67,7 +67,7 @@ export default function Blog() {
               title: "Porque expatriar meu capital com o Dólar em alta?",
               description:
                 "Warren Buffett, provavelmente o maior investidor de todos os tempos, mantém-se...",
-              articleDetailsLink: "/blog/porque-expatriar-meu-capital-com-o-dolar-em-alta",
+              articleDetailsLink: "/blog/artigos/porque-expatriar-meu-capital-com-o-dolar-em-alta",
               Category: "Categoria",
             },
             {
@@ -75,7 +75,7 @@ export default function Blog() {
               title: "Europa, China, Japão e Emergentes",
               description:
                 "Essa é uma questão que muitos investidores fazem, pois é naturalmente sentir-se mais...",
-              articleDetailsLink: "/blog/europa-china-japao-e-emergentes-oportunidades-potenciais-e-riscos",
+              articleDetailsLink: "/blog/artigos/europa-china-japao-e-emergentes-oportunidades-potenciais-e-riscos",
               Category: "Categoria",
             },
             {
@@ -83,7 +83,7 @@ export default function Blog() {
               title: "Joint Tenancy: o que é e como usar?",
               description:
                 "Joint tenancy é um instrumento legal que pode ser compreendido como uma...",
-              articleDetailsLink: "/blog/joint-tenancy-o-que-e-e-como-usar",
+              articleDetailsLink: "/blog/artigos/joint-tenancy-o-que-e-e-como-usar",
               Category: "Categoria",
             },
             {
@@ -91,7 +91,7 @@ export default function Blog() {
               title: "A crise de 2008: um divisor de águas",
               description:
                 "Nos acostumamos a ter a Europa no centro de nossas atenções, por diversos motivos...",
-              articleDetailsLink: "/blog/a-crise-de-2008-um-divisor-de-aguas",
+              articleDetailsLink: "/blog/artigos/a-crise-de-2008-um-divisor-de-aguas",
               Category: "Categoria",
             },
             {
@@ -99,7 +99,7 @@ export default function Blog() {
               title: "Estados Unidos: terra fértil para investimentos",
               description:
                 "Mais do que a maior e mais vibrante economia do mundo, os Estados Unidos...",
-              articleDetailsLink: "/blog/estados-unidos-terra-fertil-para-investimentos",
+              articleDetailsLink: "/blog/artigos/estados-unidos-terra-fertil-para-investimentos",
               Category: "Categoria",
             },
           ]}
