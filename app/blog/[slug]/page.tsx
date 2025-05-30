@@ -1,9 +1,15 @@
 import { notFound } from 'next/navigation'
 import { BlogDetail } from '../d/page'
 
-// Dicionário de slugs -> títulos
+// Interface esperada por Next.js App Router
+interface PageProps {
+  params: {
+    slug: string
+  }
+}
+
 const SLUG_TO_TITULO: Record<string, string> = {
-  'investimentos-nos-estados-unidos-oportunidade-ou-estrategia': 'Investimentos nos Estados Unidos: oportunidade ou estratégia?',
+  'investimentos-nos-estados-unidos-oportunidade-ou-estratégia': 'Investimentos nos Estados Unidos: oportunidade ou estratégia?',
   'enfim-os-americanos-escolheram-trump-e-agora': 'Enfim, os americanos escolheram Trump. E agora?',
   'paraisos-fiscais-legitimos-ou-nao': 'Paraísos fiscais: legalidade e proteção patrimonial',
   'como-montar-uma-carteira-de-investimentos-no-exterior': 'Como montar uma carteira de investimentos no exterior',
@@ -16,12 +22,12 @@ const SLUG_TO_TITULO: Record<string, string> = {
   'estados-unidos-terra-fertil-para-investimentos': 'Estados Unidos: terra fértil para investimentos',
 }
 
-// 🔧 Gera as rotas estáticas no build (SSG)
+// Geração de rotas estáticas com SSG
 export async function generateStaticParams() {
   return Object.keys(SLUG_TO_TITULO).map((slug) => ({ slug }))
 }
 
-export default async function BlogArticle({ params }: { params: { slug: string } }) {
+export default async function BlogArticle({ params }: PageProps) {
   const titulo = SLUG_TO_TITULO[params.slug]
 
   if (!titulo) return notFound()
