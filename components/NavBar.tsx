@@ -36,7 +36,7 @@ export default function NavBar() {
         </div>
                 {/* CTA sempre visível */}
         <a
-          href="#contato"
+          href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
           className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-semibold transition hidden md:block"
         >
           Agende a sua Reunião
@@ -63,7 +63,7 @@ export default function NavBar() {
               <NavIcon icon={<HelpCircle size={22} />} label="FAQs" />
             </Link>
             <a
-              href="#contato"
+              href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
               className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-semibold transition w-full text-center"
             >
               Agende a sua Reunião

@@ -5,13 +5,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const slides = [
   {
-    image: '/bg-section-1.jpeg',
+    image: '/carrossel-foto1.jpg',
     title: 'Investir nos Estados Unidos é uma necessidade.',
     subtitle:
       'Nossa instabilidade política, fiscal e jurídica exige diversificação internacional para proteção do patrimônio.',
   },
   {
-    image: '/bg-section-13.jpeg',
+    image: '/bg-section-13.jpg',
     title: 'E pode ser para você.',
     subtitle:
       'Alocar parte dele nos Estados Unidos traz proteção, minimiza riscos e aumenta seu potencial de valorização.',
@@ -34,33 +34,47 @@ export default function HeroSlider() {
   return (
     <section className="relative h-screen overflow-hidden">
       {slides.map((slide, i) => (
-        <div
-          key={i}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            i === current ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          }`}
-        >
-          <Image
-            src={slide.image}
-            alt={`Slide ${i}`}
-            fill
-            className="object-cover"
-            style={{
-              objectFit: 'cover',
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+  <div
+    key={i}
+    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+      i === current ? 'opacity-100 z-20' : 'opacity-0 z-10'
+    }`}
+  >
+    <Image
+      src={slide.image}
+      alt={`Slide ${i}`}
+      fill
+      priority={i === 0}
+      className="object-cover"
+      style={{
+        objectPosition: 'center top', // Foco mais natural
+      }}
+    />
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-            <h2 className="text-white text-3xl md:text-5xl font-semibold mb-4 drop-shadow-sm">
-              {slide.title}
-            </h2>
-            <p className="text-neutral-200 text-base md:text-lg max-w-2xl">
-              {slide.subtitle}
-            </p>
-          </div>
-        </div>
-      ))}
+    {/* Escurecimento total */}
+    <div className="absolute inset-0 bg-black/60 z-10" />
+
+    {/* Texto em destaque */}
+<div
+  className={`absolute inset-0 z-20 flex flex-col px-6 ${
+    i === 1
+      ? 'items-start justify-center text-left pb-24 md:pl-24'
+      : 'items-center justify-center text-center'
+  }`}
+>
+  <h2 className="text-white text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-lg animate-fade-in mb-4">
+    {slide.title}
+  </h2>
+  <p className="text-neutral-200 text-lg md:text-xl font-light max-w-2xl leading-relaxed animate-fade-in delay-200">
+    {slide.subtitle}
+  </p>
+</div>
+
+
+
+  </div>
+))}
+
 
       <button
         onClick={prevSlide}
