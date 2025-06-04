@@ -1,28 +1,24 @@
 export function SectionTwo() {
   const accordionData = [
     {
-      title: 'Facilidade',
-      description: 'Abra sua conta em minutos, com processo 100% digital e sem burocracia.'
+      title: 'Redução do risco-país',
+      description: 'A instabilidade política, econômica, fiscal e jurídica é altamente negativa a investimentos. Nesse contexto, os investimentos no exterior tornam-se muito mais seguros, previsíveis e interessantes para proteção, formação ou transferência de patrimônio.'
     },
     {
-      title: 'Economia',
-      description: 'Economize com IOF reduzido e câmbio mais vantajoso do que em casas de câmbio tradicionais.'
+      title: 'Proteção cambial',
+      description: 'As mesmas condições que tornam o Brasil instável e afastam investidores, causam uma excessiva perda do poder de compra do Real. Ter parte do patrimônio em Dólar nos protege dessa perda do poder de compra. '
+    },
+    {
+      title: 'Diversificação da carteira',
+      description: 'Com a diversificação internacional temos acesso a setores inexpressivos em nossa economia, mas que nos Estados Unidos contam com líderes mundiais e que oferecem grandes oportunidades de investimento e evolução patrimonial.'
+    },
+    {
+      title: 'Sucessão patrimonial',
+      description: 'Se o investidor objetiva sua sucessão patrimonial, há a possibilidade de uso de estruturas como Trust ou Holding, que oferecem uma transição de titulares segura, facilitada e econômica, com potencial de grande redução de tributos.'
     },
     {
       title: 'Segurança',
-      description: 'Sua conta é protegida por instituições regulamentadas e com autenticação em dois fatores.'
-    },
-    {
-      title: 'Aceito globalmente',
-      description: 'Utilize seu saldo em mais de 180 países com cartão de débito internacional.'
-    },
-    {
-      title: 'Atendimento em português',
-      description: 'Conte com suporte humanizado 24/7 em português, inclusive em feriados.'
-    },
-    {
-      title: 'Controle total pelo app',
-      description: 'Acompanhe suas movimentações em tempo real, diretamente do aplicativo.'
+      description: 'Eventos como desastres ambientais, guerras ou confisco de bens por um governo, podem reduzir patrimônios sólidos a uma fração do original. Ter os investimentos em outra jurisdição e custodiados por instituições confiáveis e seguras torna-se uma excelente proteção.'
     },
   ];
 

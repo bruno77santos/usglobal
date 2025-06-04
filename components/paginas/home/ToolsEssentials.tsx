@@ -48,7 +48,7 @@ export default function Tools_Essentials() {
               href: "/paginas/tools/sp500",
               img: "/tools/1.png",
               title: "Simulador S&P 500",
-              desc: "Avalie o desempenho do principal índice do mercado americano e entenda como sua carteira pode se beneficiar da valorização global.",
+              desc: "Compare seus investimentos com o índice de referência mundial e tire proveito de sua valorização.",
             },
             {
               href: "/paginas/tools/holding",
@@ -76,24 +76,27 @@ export default function Tools_Essentials() {
             },
           ].map(({ href, img, title, desc }, index) => (
             <SwiperSlide key={index}>
-              <a
-                href={href}
-                target="_blank"
-                className="block bg-white hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden shadow-md border border-gray-200 p-6 h-full flex flex-col gap-4"
-              >
-                <div className="w-full h-[220px] relative rounded-xl overflow-hidden">
-                  <Image
-                    src={img}
-                    alt={title}
-                    fill
-                    className="object-cover rounded-xl"
-                  />
-                </div>
+  <a
+    href={href}
+    target="_blank"
+    className="block bg-white hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden shadow-md border border-gray-200 p-6 flex flex-col gap-4 h-full min-h-[420px]" // 🔧 altura mínima padronizada
+  >
+    <div className="w-full h-[220px] relative rounded-xl overflow-hidden">
+      <Image
+        src={img}
+        alt={title}
+        fill
+        className="object-cover rounded-xl"
+      />
+    </div>
 
-                <h3 className="text-xl font-bold text-[#030a34]">{title}</h3>
-                <p className="text-base text-gray-600 leading-relaxed">{desc}</p>
-              </a>
-            </SwiperSlide>
+    <div className="flex flex-col justify-between flex-1">
+      <h3 className="text-xl font-bold text-[#030a34]">{title}</h3>
+      <p className="text-base text-gray-600 leading-relaxed">{desc}</p>
+    </div>
+  </a>
+</SwiperSlide>
+
           ))}
         </Swiper>
       </div>
