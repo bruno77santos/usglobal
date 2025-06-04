@@ -21,7 +21,7 @@ export default function Footer() {
     { label: 'S&P 500', href: '/paginas/tools/sp500' },
     { label: 'Holding', href: '/paginas/tools/holding' },
     { label: 'Offshore', href: '/paginas/tools/offshore' },
-    { label: 'Profile', href: '/paginas/tools/profile' },
+    { label: 'Investidor Global', href: '/paginas/tools/profile' },
     { label: 'Saída Fiscal', href: '/paginas/tools/saida-fiscal' },
   ];
 
@@ -71,7 +71,7 @@ Ao utilizar nossos serviços, você concorda com os termos desta Política de Pr
               <Image src="/logo.svg" alt="InvestGlobal US" width={160} height={40} />
             </Link>
             <p className="mt-4 text-sm">
-              Soluções de investimentos nos Estados Unidos para brasileiros.
+              A Liberdade Financeira ao Seu Alcance
             </p>
             <div className="mt-6 flex space-x-4">
               <a href="https://www.linkedin.com/company/investglobalus" target="_blank" rel="noopener noreferrer">

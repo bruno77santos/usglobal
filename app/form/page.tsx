@@ -32,36 +32,29 @@ export default function Form() {
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await fetch('https://api.trello.com/1/cards', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          idList: '678ec50cd39e18f5ebca5e48',
-          key: '5b6e1d320af14c490be1bda72621e7fe',
-          token: 'ATTAf91a6f85ce066af1172582f6db7f18da8a199ad007cb11ae54bd8f5d55a26e97F65CF22C',
-          name: `Novo investidor: ${formData.Nome}`,
-          desc: `Respostas do formulário: ${JSON.stringify(formData, null, 2)}`,
-        }),
-      });
+  try {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
 
-      if (response.ok) {
-        window.open('/Guia_LiberdadeFinanceira_InvestGlobal.pdf', '_blank', 'noopener,noreferrer');
-        setTimeout(() => {
-          window.location.href = '/obrigado';
-          setSendForm(true);
-        }, 2000);
-      } else {
-        console.error('Erro ao enviar formulário:', response.statusText);
-        alert('Erro ao enviar formulário.');
-      }
-    } catch (error) {
-      console.error('Erro na requisição:', error);
-      alert('Erro ao enviar formulário.');
+    if (response.ok) {
+      window.open('/Guia_LiberdadeFinanceira_InvestGlobal.pdf', '_blank', 'noopener,noreferrer')
+      setTimeout(() => {
+        window.location.href = '/obrigado'
+        setSendForm(true)
+      }, 2000)
+    } else {
+      alert('Erro ao enviar o formulário.')
+      console.error(await response.json())
     }
-  };
+  } catch (err) {
+    console.error(err)
+    alert('Erro ao enviar o formulário.')
+  }
+}
+
 
   return (
     <>

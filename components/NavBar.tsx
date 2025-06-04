@@ -29,9 +29,10 @@ export default function NavBar() {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6">
           <Link href="/"><NavIcon icon={<Home size={22} />} /></Link>
-          <Link href="/paginas/quem-somos"><NavIcon icon={<FileText size={22} />} /></Link>
+          <Link href="/paginas/quem-somos"><NavIcon icon={<Users size={22} />} /></Link>
           <Link href="/blog"><NavIcon icon={<BookOpen size={22} />} /></Link>
-          <Link href="/paginas/tools"><NavIcon icon={<Users size={22} />} /></Link>
+          <Link href="/paginas/quem-somos"><NavIcon icon={<Users size={22} />} /></Link>
+          <Link href="/paginas/tools"><NavIcon icon={<FileText size={22} />} /></Link>
           <Link href="/paginas/faqs"><NavIcon icon={<HelpCircle size={22} />} /></Link>
         </div>
                 {/* CTA sempre visível */}
