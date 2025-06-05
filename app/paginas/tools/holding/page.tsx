@@ -165,9 +165,15 @@ setValorAquicicao(formatado);
               type="string"
               labelTitle={selectFinalidade == "aluguel" ? "Rendimento dos alugueis" : "Valor de Mercado"}
               placeholder="Insira o valor de mercado"
-              onChange={(e) => {
-                selectFinalidade == "aluguel" ? setValorAluguel(e.target.value) : setValorMercado(e.target.value)
-              }}
+             onChange={(e) => {
+  const valor = e.target.value;
+  if (selectFinalidade === "aluguel") {
+    setValorAluguel(valor);
+  } else {
+    setValorMercado(valor);
+  }
+}}
+
             />
           </div>
 
