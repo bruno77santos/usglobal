@@ -148,8 +148,20 @@ export default function HoldingPage() {
               labelTitle={selectFinalidade == "aluguel" ? "Valor de mercado" : "Valor de Aquisição"}
               placeholder="Insira o valor de aquisição"
               onChange={(e) => {
-                selectFinalidade === "aluguel" ? setValorMercado(e.target.value) : setValorAquicicao(e.target.value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }))
-              }}
+  const valor = e.target.value;
+
+  if (selectFinalidade === "aluguel") {
+    setValorMercado(valor);
+  } else {
+    const numero = Number(valor.replace(/[^\d]/g, ''));
+    const formatado = numero.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    setValorAquicicao(formatado);
+  }
+}}
+
             />
             <InputLabel
               type="string"
