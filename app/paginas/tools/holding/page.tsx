@@ -152,12 +152,11 @@ export default function HoldingPage() {
   if (selectFinalidade === "aluguel") {
     setValorMercado(valor);
   } else {
-    const numero = Number(valor.replace(/[^\d]/g, '')); // Agora esta variável é usada
-    const formatado = numero.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-    setValorAquicicao(formatado);
+    const formatado = Number(valor.replace(/[^\d]/g, '')).toLocaleString("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+});
+setValorAquicicao(formatado);
   }
 }}
 
