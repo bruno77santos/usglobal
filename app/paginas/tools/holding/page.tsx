@@ -360,43 +360,35 @@ export default function HoldingPage() {
         )}
 
 {selectFinalidade === "venda" && (
+  <div data-off={sim} className="data-[off=true]:block hidden mt-[32px] bg-gray-800 p-6 rounded-lg">
+    <h2 className=" text-[28px] font-bold mb-4">Resultados</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[18px]">
+      <div className="bg-gray-900 p-4 rounded-lg">
+        <h3 className="font-semibold">Pessoa Física</h3>
+        <p>Imposto sobre o ganho de capital: <strong>R$ {vendaValues.LucroVendaPF}</strong></p>
+      </div>
+      <div className="bg-gray-900 p-4 rounded-lg">
+        <h3 className="font-semibold">Holding</h3>
+        <p>Imposto sobre o valor de mercado: <strong>R$ {vendaValues.LucroVendaHolding}</strong></p>
+      </div>
+    </div>
 
-          (
-            <div data-off={sim} className="data-[off=true]:block hidden mt-[32px] bg-gray-800 p-6 rounded-lg">
-              <h2 className=" text-[28px] font-bold mb-4">Resultados</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[18px]">
-                <div className="bg-gray-900 p-4 rounded-lg">
-                  <h3 className="font-semibold">Pessoa Física</h3>
-                  <p>Imposto sobre o ganho de capital: <strong>R$ {vendaValues.LucroVendaPF}</strong></p>
-
-                </div>
-                <div className="bg-gray-900 p-4 rounded-lg">
-                  <h3 className="font-semibold">Holding</h3>
-                  <p>Imposto sobre o valor de mercado: <strong>R$ {vendaValues.LucroVendaHolding}</strong></p>
-
-                </div>
-              </div>
-
-              <div data-off={sim} className="data-[off=true]:block hidden mt-[24px] p-4 bg-gray-700 rounded-lg text-center">
-                <h3 className="text-[20px] font-semibold">
-                  Os cálculos favorecem a Holding.
-                </h3>
-                <p className="mt-2">
-                  Recomendamos uma análise detalhada com um especialista.{" "}
-                  <a
-                    target="_blank"
-                    href="https://wa.me/+5511920914081?text=Ol%C3%A1%20estou%20interessado%20em%20investir!"
-                    className="text-blue-400 underline"
-                  >
-                    Clique aqui para falar com a Invest Global.
-                  </a>
-                </p>
-              </div>
-            </div>
-
-
-          )
+    <div data-off={sim} className="data-[off=true]:block hidden mt-[24px] p-4 bg-gray-700 rounded-lg text-center">
+      <h3 className="text-[20px] font-semibold">Os cálculos favorecem a Holding.</h3>
+      <p className="mt-2">
+        Recomendamos uma análise detalhada com um especialista.{" "}
+        <a
+          target="_blank"
+          href="https://wa.me/+5511920914081?text=Ol%C3%A1%20estou%20interessado%20em%20investir!"
+          className="text-blue-400 underline"
+        >
+          Clique aqui para falar com a Invest Global.
+        </a>
+      </p>
+    </div>
+  </div>
 )}
+
 
         <h1 className=" mt-[48px]
                 text-[40px] font-[700]">Porque simular</h1>
