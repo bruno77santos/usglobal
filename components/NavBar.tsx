@@ -27,14 +27,14 @@ export default function NavBar() {
 
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link href="/"><NavIcon icon={<Home size={22} />} /></Link>
-          <Link href="/paginas/quem-somos"><NavIcon icon={<Users size={22} />} /></Link>
-          <Link href="/blog"><NavIcon icon={<BookOpen size={22} />} /></Link>
-          <Link href="/paginas/quem-somos"><NavIcon icon={<Users size={22} />} /></Link>
-          <Link href="/paginas/tools"><NavIcon icon={<FileText size={22} />} /></Link>
-          <Link href="/paginas/faqs"><NavIcon icon={<HelpCircle size={22} />} /></Link>
-        </div>
+<div className="hidden md:flex items-center space-x-6">
+  <Link href="/"><NavIcon icon={<Home size={22} />} label="Home" /></Link>
+  <Link href="/paginas/quem-somos"><NavIcon icon={<Users size={22} />} label="Quem Somos" /></Link>
+  <Link href="/blog"><NavIcon icon={<BookOpen size={22} />} label="Blog" /></Link>
+  <Link href="/paginas/tools"><NavIcon icon={<FileText size={22} />} label="Ferramentas" /></Link>
+  <Link href="/paginas/faqs"><NavIcon icon={<HelpCircle size={22} />} label="FAQs" /></Link>
+</div>
+
                 {/* CTA sempre visível */}
         <a
           href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
@@ -77,11 +77,20 @@ export default function NavBar() {
 }
 
 // Componente para os ícones
-function NavIcon({ icon, label }: { icon: React.ReactNode, label?: string }) {
+function NavIcon({ icon, label }: { icon: React.ReactNode; label?: string }) {
   return (
-    <div className="flex items-center space-x-2 bg-[#102336] hover:bg-[#1b3a5e] px-4 py-2 rounded-md transition cursor-pointer">
-      {icon}
-      {label && <span className="text-sm">{label}</span>}
+    <div className="relative group flex items-center justify-center">
+      {/* Ícone */}
+      <div className="bg-[#102336] hover:bg-[#1b3a5e] p-3 rounded-md transition cursor-pointer">
+        {icon}
+      </div>
+
+      {/* Tooltip */}
+      {label && (
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-black/90 text-white text-xs px-2 py-1 rounded shadow-md opacity-0 group-hover:opacity-100 transition pointer-events-none z-50 whitespace-nowrap">
+          {label}
+        </div>
+      )}
     </div>
-  )
+  );
 }

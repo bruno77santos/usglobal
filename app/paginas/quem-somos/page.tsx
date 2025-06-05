@@ -1,13 +1,13 @@
-import { Hero } from '@/components/paginas/quem-somos/hero';
-import { SectionOne } from '@/components/paginas/quem-somos/section-one';
+import { Hero } from '@/components/paginas/quem-somos/hero'
+import { SectionFounders } from '@/components/paginas/quem-somos/SectionFounders'
+import { SectionMission } from '@/components/paginas/quem-somos/SectionMission'
 
 export default function QuemSomos() {
-
   return (
-<div className="min-h-screen h-full overflow-hidden">
+    <main className="overflow-hidden">
       <Hero />
-      <SectionOne />
-    </div>
-  );
+      <SectionMission />
+      <SectionFounders />
+    </main>
+  )
 }
-

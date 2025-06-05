@@ -1,22 +1,45 @@
+'use client'
+import Image from 'next/image'
+
 export function Hero() {
-    return (
-        <section className="bg-[url('/calc/bg/bg-sim-s&p.jpg')] bg-cover bg-center h-auto mt-10 lg:h-[502px] overflow-hidden">
-            <div className="bg-[#0C2E3E]/80 h-full ">
+  return (
+    <section className="relative bg-[#0C1D2C] text-white overflow-hidden py-20 px-6 lg:py-28">
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/calc/bg/bg-sim-s&p.jpg"
+          alt="Simulador S&P 500"
+          fill
+          className="object-cover object-center opacity-20"
+        />
+        {/* Overlays de fundo */}
+        <div className="absolute top-0 right-0 w-72 h-72 bg-red-500/30 blur-[150px] rounded-full" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-600/30 blur-[150px] rounded-full" />
+      </div>
 
-                <div className="w-[97%] max-w-[1280px] flex flex-col items-left justify-center gap-10 p-10 lg:p-0 lg:gap-10 h-full mx-auto">
-                    <div className="w-[97%] max-w-[1127px]">
-                        <h1 className="text-white font-bold text-3xl lg:text-5xl mt-5">
-                            Simulador S&P 500
-                        </h1>
+      <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-center">
+        {/* Conteúdo textual */}
+        <div className="space-y-6 lg:pr-12">
+          <h1 className="text-4xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+            Simulador <span className="text-[#FF0C34]">S&P 500</span>
+          </h1>
+          <p className="text-lg lg:text-xl text-gray-200 leading-relaxed">
+            O índice mais relevante da bolsa americana com performance histórica acima de 10% ao ano em dólar.
+            <br />
+            Compare esse potencial com o Ibovespa e veja o impacto de investir globalmente.
+          </p>
+          <div className="h-1 w-24 bg-gradient-to-r from-[#FF0C34] via-white to-[#1976D2] rounded-full" />
+        </div>
 
-                        <p className="text-[#E6E6E6] lg:text-2xl font-[500] mt-[24px]">
-                            Principal índice de ações dos Estados Unidos, reúne as 500 maiores empresas do país, mantidas em constante monitoramento e atualização. Melhor retrato da força da economia americana e das oportunidades de evolução do capital investido no país, cujas oscilações têm impactos no mundo todo. A proposta deste simulador é fornecer um comparativo desse potencial contra os resultados da B3, e baseia-se no histórico de ambos índices (S&P500 e Ibovespa) dos últimos 10 anos.               </p>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </section>
-    );
+        {/* Imagem destacada */}
+        <div className="hidden lg:block relative w-full h-[360px]">
+          <Image
+            src="/icons/tools/icon-1.svg"
+            alt="Ícone S&P"
+            fill
+            className="object-contain drop-shadow-lg"
+          />
+        </div>
+      </div>
+    </section>
+  )
 }

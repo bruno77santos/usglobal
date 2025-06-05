@@ -3,25 +3,21 @@ import Image from 'next/image'
 
 export function Hero() {
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black h-full bg-opacity-50">
-      {/* Imagem de fundo */}
+    <section className="relative h-screen w-full overflow-hidden">
       <Image
         src="/bg-section-14.jpeg"
-        alt="Quem somos - plano de fundo"
+        alt="Quem somos"
         fill
+        className="object-cover brightness-[.35]"
         priority
-        className="object-cover brightness-50"
       />
-
-      {/* Conteúdo sobre a imagem */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-        <h1 className="text-white font-regular text-3xl lg:text-5xl max-w-7xl">
-          Quem somos
+      <div className="absolute inset-0 bg-black/70" />
+      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+        <h1 className="text-white text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-lg">
+          Conheça quem está por trás
         </h1>
-        <p className="text-[#E6E6E6] text-xl lg:text-2xl font-medium max-w-6xl mx-auto mt-6">
-          Acima de tudo, somos profissionais comprometidos com investimentos inteligentes,
-          sem amarras, sem fronteiras. Comprometidos com as melhores soluções para que você
-          alcance a independência financeira.
+        <p className="text-gray-200 text-lg md:text-xl font-light max-w-3xl mt-6 leading-relaxed">
+          Acima de tudo, somos profissionais comprometidos com investimentos inteligentes, sem amarras, sem fronteiras. Comprometidos as melhores soluções para que você alcance a independência financeira.
         </p>
       </div>
     </section>

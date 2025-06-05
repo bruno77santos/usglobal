@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-{/*import InputRadio from '@/components/compartilhados/inputRadio';*/}
+import InputRadio from '@/components/compartilhados/inputRadio';
 import Hero from '@/components/paginas/tools/profile/hero';
 import InputLabel from '@/components/compartilhados/inputLabel';
 
@@ -176,6 +176,206 @@ export default function ProfileInvestor() {
       <Hero title="Perfil do investidor global" />
 
       {/* Demais seções seguem aqui... já estavam tipadas via handleChange(key, string) ✅ */}
+       <section className=" w-[90%] max-w-[1280px] text-white mt-[91px] mx-auto mb-[102px]">
+
+        {/* Pergunta sobre investimentos, com opções de radio button */}
+        <div className="w-full flex flex-col lg:flex-row justify-between lg:gap-5">
+          {/* Seção sobre o conhecimento ou experiência com investimentos */}
+          <div className="w-full lg:max-w-[770.5px]">
+            <h2 className="font-[600] text-[24px]">Você já investe, investiu ou conhece ações, FIIs, fundos, ou renda
+              fixa?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Conheço pouco, estou indeciso para investir" name="doYouInvest?"
+                          onChange={() => handleChange('doYouInvest?', 'Conheço pouco, estou indeciso para investir')} />
+              <InputRadio inputDesc="Sim, conheço a maioria e preciso investir" name="doYouInvest?"
+                          onChange={() => handleChange('doYouInvest?', 'Sim, conheço a maioria e preciso investir')} />
+              <InputRadio inputDesc="Sim, conheço e já sou investidor (mesmo que seja apenas no Brasil)"
+                          name="doYouInvest?"
+                          onChange={() => handleChange('doYouInvest?', 'Sim, conheço e já sou investidor (mesmo que seja apenas no Brasil)')} />
+            </div>
+          </div>
+
+          {/* Seção sobre o principal objetivo financeiro */}
+          <div className="w-full lg:max-w-[743.5px] mt-[24px] lg:mt-0">
+            <h2 className="font-[600] text-[24px]">Qual seu principal objetivo financeiro?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Renda passiva" name="whyYourObjectiveFinance?"
+                          onChange={() => handleChange('whyYourObjectiveFinance?', 'Renda passiva')} />
+              <InputRadio inputDesc="Formação de patrimônio" name="whyYourObjectiveFinance?"
+                          onChange={() => handleChange('whyYourObjectiveFinance?', 'Formação de patrimônio')} />
+              <InputRadio inputDesc="Proteção e evolução de patrimônio" name="whyYourObjectiveFinance?"
+                          onChange={() => handleChange('whyYourObjectiveFinance?', 'Proteção e evolução de patrimônio')} />
+            </div>
+          </div>
+        </div>
+
+        {/* Seção sobre o horizonte de investimento e reação diante de perdas */}
+        <div className="w-full flex flex-col lg:flex-row justify-between mt-[64px] lg:gap-5">
+          {/* Seção sobre o horizonte de investimento */}
+          <div className="w-full lg:max-w-[770.5px]">
+            <h2 className="font-[600] text-[24px]">Qual seu horizonte de investimento?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Curto prazo: até 2 anos" name="investmentHorizon?"
+                          onChange={() => handleChange('investmentHorizon?', 'Curto prazo: até 2 anos')} />
+              <InputRadio inputDesc="Médio prazo: de 2 a 5 anos" name="investmentHorizon?"
+                          onChange={() => handleChange('investmentHorizon?', 'Médio prazo: de 2 a 5 anos')} />
+              <InputRadio inputDesc="Longo prazo: acima de 5 anos" name="investmentHorizon?"
+                          onChange={() => handleChange('investmentHorizon?', 'Longo prazo: acima de 5 anos')} />
+            </div>
+          </div>
+
+          {/* Seção sobre como o investidor reage diante de perdas financeiras */}
+          <div className="w-full lg:max-w-[743.5px] mt-[24px] lg:mt-0">
+            <h2 className="font-[600] text-[24px]">Como você reage diante de perdas financeiras?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Entre medo e pânico, sensação de “não sirvo pra isso”" name="reactionToLosses?"
+                          onChange={() => handleChange('reactionToLosses?', 'Entre medo e pânico, sensação de “não sirvo pra isso”')} />
+              <InputRadio inputDesc="Preocupação controlada, esperança de seja só temporário" name="reactionToLosses?"
+                          onChange={() => handleChange('reactionToLosses?', 'Preocupação controlada, esperança de seja só temporário')} />
+              <InputRadio inputDesc="Indiferente, sabe que perdas fazem parte e pode esperar a recuperação"
+                          name="reactionToLosses?"
+                          onChange={() => handleChange('reactionToLosses?', 'Indiferente, sabe que perdas fazem parte e pode esperar a recuperação')} />
+            </div>
+          </div>
+        </div>
+
+        {/* Seção sobre o conhecimento de investimentos internacionais e se já tem investimentos fora */}
+        <div className="w-full flex flex-col lg:flex-row justify-between mt-[64px] lg:gap-5">
+          {/* Seção sobre conhecimento de investimentos internacionais */}
+          <div className="w-full lg:max-w-[770.5px]">
+            <h2 className="font-[600] text-[24px]">Qual seu nível de conhecimento sobre investimentos
+              internacionais?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio
+                inputDesc="Ainda não investe ou está começando a investir, estudando e reunindo informações sobre investimentos"
+                name="internationalInvestmentKnowledge?"
+                onChange={() => handleChange('internationalInvestmentKnowledge?', 'Ainda não investe ou está começando a investir, estudando e reunindo informações sobre investimentos')} />
+              <InputRadio
+                inputDesc="Entende alguns termos e conceitos, já investe ha algum tempo no Brasil, mas ainda tem algumas dúvidas"
+                name="internationalInvestmentKnowledge?"
+                onChange={() => handleChange('internationalInvestmentKnowledge?', 'Entende alguns termos e conceitos, já investe ha algum tempo no Brasil, mas ainda tem algumas dúvidas')} />
+              <InputRadio
+                inputDesc="Investe há um bom tempo, inclusive no exterior em várias classes de ativos; está familiarizado com a maior parte dos termos, conceitos e estratégias"
+                name="internationalInvestmentKnowledge?"
+                onChange={() => handleChange('internationalInvestmentKnowledge?', 'Investe há um bom tempo, inclusive no exterior em várias classes de ativos; está familiarizado com a maior parte dos termos, conceitos e estratégias')} />
+            </div>
+          </div>
+
+          {/* Seção sobre se já tem investimentos fora do Brasil */}
+          <div className="w-full lg:max-w-[743.5px] mt-[24px] lg:mt-0">
+            <h2 className="font-[600] text-[24px]">Você já tem investimentos fora do país?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Não, estou começando a me informar" name="investmentsOutsideBrazil?"
+                          onChange={() => handleChange('investmentsOutsideBrazil?', 'Não, estou começando a me informar')} />
+              <InputRadio inputDesc="Não, e tenho a sensação de que estou “atrasado”" name="investmentsOutsideBrazil?"
+                          onChange={() => handleChange('investmentsOutsideBrazil?', 'Não, e tenho a sensação de que estou “atrasado”')} />
+              <InputRadio inputDesc="Sim, e pretendo aumentar o envio de remessas para lá"
+                          name="investmentsOutsideBrazil?"
+                          onChange={() => handleChange('investmentsOutsideBrazil?', 'Sim, e pretendo aumentar o envio de remessas para lá')} />
+            </div>
+          </div>
+        </div>
+
+        {/* Seção sobre o percentual do patrimônio fora do Brasil e as preocupações sobre investir fora */}
+        <div className="w-full flex flex-col lg:flex-row justify-between mt-[64px] lg:gap-5">
+          {/* Seção sobre o percentual do patrimônio fora do Brasil */}
+          <div className="w-full lg:max-w-[770.5px]">
+            <h2 className="font-[600] text-[24px]">Quanto do seu patrimônio você gostaria de ter fora do Brasil?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Pouco, no máximo 10%" name="percentageInvestmentOutsideBrazil?"
+                          onChange={() => handleChange('percentageInvestmentOutsideBrazil?', 'Pouco, no máximo 10%')} />
+              <InputRadio inputDesc="Algo entre 10% e 20%" name="percentageInvestmentOutsideBrazil?"
+                          onChange={() => handleChange('percentageInvestmentOutsideBrazil?', 'Algo entre 10% e 20%')} />
+              <InputRadio inputDesc="Pelo menos 35%" name="percentageInvestmentOutsideBrazil?"
+                          onChange={() => handleChange('percentageInvestmentOutsideBrazil?', 'Pelo menos 35%')} />
+            </div>
+          </div>
+
+          {/* Seção sobre preocupações ao investir fora do Brasil */}
+          <div className="w-full lg:max-w-[743.5px] mt-[24px] lg:mt-0">
+            <h2 className="font-[600] text-[24px]">Qual sua maior preocupação em investir fora do Brasil?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Uma desvalorização do dólar" name="concernInvestingOutsideBrazil?"
+                          onChange={() => handleChange('concernInvestingOutsideBrazil?', 'Uma desvalorização do dólar')} />
+              <InputRadio inputDesc="As transferências internacionais, complexidade e segurança"
+                          name="concernInvestingOutsideBrazil?"
+                          onChange={() => handleChange('concernInvestingOutsideBrazil?', 'As transferências internacionais, complexidade e segurança')} />
+              <InputRadio inputDesc="Não conhecer as garantias de que meu patrimônio está seguro"
+                          name="concernInvestingOutsideBrazil?"
+                          onChange={() => handleChange('concernInvestingOutsideBrazil?', 'Não conhecer as garantias de que meu patrimônio está seguro')} />
+            </div>
+          </div>
+        </div>
+
+        {/* Seção sobre a importância da estratégia de investimento e interesse em setores */}
+        <div className="w-full flex flex-col lg:flex-row justify-between mt-[64px] lg:gap-5">
+          {/* Seção sobre o que é mais importante em uma estratégia de investimento */}
+          <div className="w-full lg:max-w-[770.5px]">
+            <h2 className="font-[600] text-[24px]">O que você considera mais importante em uma estratégia de
+              investimento?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Cuidado e persistência" name="importantInvestmentStrategy?"
+                          onChange={() => handleChange('importantInvestmentStrategy?', 'Cuidado e persistência')} />
+              <InputRadio inputDesc="Estratégia clara e conhecimento" name="importantInvestmentStrategy?"
+                          onChange={() => handleChange('importantInvestmentStrategy?', 'Estratégia clara e conhecimento')} />
+              <InputRadio inputDesc="Informação e arrojo" name="importantInvestmentStrategy?"
+                          onChange={() => handleChange('importantInvestmentStrategy?', 'Informação e arrojo')} />
+            </div>
+          </div>
+
+          {/* Seção sobre interesse nos setores de investimento */}
+          <div className="w-full lg:max-w-[743.5px] mt-[24px] lg:mt-0">
+            <h2 className="font-[600] text-[24px]">Em quais setores você tem mais interesse?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Mineração, materiais, agronegócio" name="investmentInterestSectors?"
+                          onChange={() => handleChange('investmentInterestSectors?', 'Mineração, materiais, agronegócio')} />
+              <InputRadio inputDesc="Financeiro, saúde, bens de consumo" name="investmentInterestSectors?"
+                          onChange={() => handleChange('investmentInterestSectors?', 'Financeiro, saúde, bens de consumo')} />
+              <InputRadio inputDesc="Tecnologia, defesa, aeroespacial" name="investmentInterestSectors?"
+                          onChange={() => handleChange('investmentInterestSectors?', 'Tecnologia, defesa, aeroespacial')} />
+            </div>
+          </div>
+        </div>
+
+        {/* Seção sobre planos futuros de sair do país e capacidade de investimento */}
+        <div className="w-full flex flex-col lg:flex-row justify-between mt-[64px] lg:gap-5">
+          {/* Seção sobre planos de deixar o país */}
+          <div className="w-full lg:max-w-[770.5px]">
+            <h2 className="font-[600] text-[24px]">Você pretende deixar o país futuramente?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Não penso em sair do meu país" name="planToLeaveCountry?"
+                          onChange={() => handleChange('planToLeaveCountry?', 'Não penso em sair do meu país')} />
+              <InputRadio inputDesc="Se for preciso, mas tenho de pensar muito bem nisso" name="planToLeaveCountry?"
+                          onChange={() => handleChange('planToLeaveCountry?', 'Se for preciso, mas tenho de pensar muito bem nisso')} />
+              <InputRadio inputDesc="Sim, estou planejando minha saída" name="planToLeaveCountry?"
+                          onChange={() => handleChange('planToLeaveCountry?', 'Sim, estou planejando minha saída')} />
+            </div>
+          </div>
+
+          {/* Seção sobre quanto está disponível para investir */}
+          <div className="w-full lg:max-w-[743.5px] mt-[24px] lg:mt-0">
+            <h2 className="font-[600] text-[24px]">Agora, para que possamos ser mais assertivos e falar também de uma
+              carteira recomendada para seu perfil, pode nos informar quanto você tem disponível para investir?</h2>
+            <div className="flex flex-col gap-2 mt-[24px]">
+              <InputRadio inputDesc="Entre R$ 100.000 e R$ 300.000" name="investmentAmount?"
+                          onChange={() => handleChange('investmentAmount?', 'Entre R$ 100.000 e R$ 300.000')} />
+              <InputRadio inputDesc="Entre R$ 301.000 e R$ 500.000" name="investmentAmount?"
+                          onChange={() => handleChange('investmentAmount?', 'Entre R$ 301.000 e R$ 500.000')} />
+              <InputRadio inputDesc="Mais de R$ 500.000" name="investmentAmount?"
+                          onChange={() => handleChange('investmentAmount?', 'Mais de R$ 500.000')} />
+            </div>
+          </div>
+        </div>
+
+
+        <button onClick={() => {
+          setShowModal(true);
+        }}
+                className="mt-[80px] lg:flex py-3.5 px-4 text-lg font-medium rounded-lg transition-all duration-300 text-[#E6E6E6] bg-[#FF0C34] hover:opacity-70 hover:text-white text-nowrap ml-auto">
+          Finalizar preenchimento
+        </button>
+
+      </section>
     </>
   );
 }
