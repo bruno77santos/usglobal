@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import InputLabel from '@/components/compartilhados/inputLabel'
+import InputLabel from '@/components/compartilhados/inputLabel';
 import InputLabelSelect from '@/components/compartilhados/inputLabelSelect';
 import { Hero } from "@/components/paginas/tools/holding/hero";
 
@@ -13,6 +13,15 @@ type TabelaResultado = {
   diferencaCustos: number;
 };
 
+type FormDataType = {
+  Nome?: string;
+  Email?: string;
+  Phone?: string;
+  investeNaXP?: string;
+  quantoTemInvestido?: string;
+  investeNoExterior?: string;
+};
+
 export default function HoldingPage() {
   const [selectFinalidade, setSelectFinalidade] = useState<string>("");
   const [valorAquicicao, setValorAquicicao] = useState<string>("");
@@ -20,10 +29,10 @@ export default function HoldingPage() {
   const [valorAluguel, setValorAluguel] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [qtdImoveis, setQtdImoveis] = useState<string>("");
-  const [vendaValues, setVendaValues] = useState({ LucroVendaPF: "", LucroVendaHolding: "", });
+  const [vendaValues, setVendaValues] = useState({ LucroVendaPF: "", LucroVendaHolding: "" });
   const [sim, setSim] = useState(false);
   const [tabela, setTabela] = useState<TabelaResultado[]>([]);
-  const [formData, setFormData] = useState({}) as any;
+  const [formData, setFormData] = useState<FormDataType>({});
 
   const calcularResultado = () => {
     const aquisicao = Number(valorAquicicao.replace(/[^\d]/g, ""));
@@ -36,8 +45,8 @@ export default function HoldingPage() {
       const impostoHolding = mercado * 0.06;
 
       setVendaValues({
-        LucroVendaPF: impostoVenda.toFixed(2) || "",
-        LucroVendaHolding: impostoHolding.toFixed(2) || "",
+        LucroVendaPF: impostoVenda.toFixed(2),
+        LucroVendaHolding: impostoHolding.toFixed(2),
       });
       return;
     }
@@ -47,15 +56,15 @@ export default function HoldingPage() {
     const taxaMercado = mercado * 0.03;
     const custoInicialHolding = metadeImoveisAlugados ? taxaMercado + custosAdvogado : custosAdvogado;
 
-    const novaTabela = [];
+    const novaTabela: TabelaResultado[] = [];
     let ano = 1;
 
     while (ano <= 10) {
       const aluguelPF = (aluguel * 0.275) * 12;
       const aluguelHolding = (aluguel * 0.11) * 12;
 
-      let custoHoldingAnual = ano === 1 ? custoInicialHolding + aluguelHolding : aluguelHolding;
-      let custoPFAnual = aluguelPF;
+      const custoHoldingAnual = ano === 1 ? custoInicialHolding + aluguelHolding : aluguelHolding;
+      const custoPFAnual = aluguelPF;
 
       const diferencaCustos = custoHoldingAnual - custoPFAnual;
 
@@ -73,8 +82,8 @@ export default function HoldingPage() {
     setTabela(novaTabela);
   };
 
-  const handleChange = (name: any, value: any) => {
-    setFormData((prevData: any) => ({
+  const handleChange = (name: keyof FormDataType, value: string) => {
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
