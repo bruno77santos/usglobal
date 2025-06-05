@@ -168,7 +168,7 @@ export default function HoldingPage() {
               labelTitle={selectFinalidade == "aluguel" ? "Rendimento dos alugueis" : "Valor de Mercado"}
               placeholder="Insira o valor de mercado"
               onChange={(e) => {
-                selectFinalidade == "aluguel" ? setValorAluguel(e.target.value) : setValorMercado(e.target.value)
+                selectFinalidade == "aluguel" ? setValorAluguel(e.target.value) : setValorMercado(e.target.value);
               }}
             />
           </div>
@@ -279,10 +279,10 @@ export default function HoldingPage() {
                   className="px-4 py-2 bg-blue-600 text-white rounded-md"
                   onClick={() => {
 
-                    handleSubmit()
-                    calcularResultado()
-                    handleModalSubmit()
-                    setSim(true)
+                    handleSubmit();
+                    calcularResultado();
+                    handleModalSubmit();
+                    setSim(true);
                   }}
                 >
                   Confirmar

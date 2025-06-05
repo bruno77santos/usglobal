@@ -50,7 +50,7 @@ export function SectionOne() {
   const handleSubmit = async () => {
     // simulação de envio
     setTimeout(() => {
-      setSendForm(true)
+      setSendForm(true);
     }, 1000)
   }
 
@@ -65,8 +65,8 @@ export function SectionOne() {
                 <Image src="/thanks.png" alt="Obrigado" width={200} height={200} />
                 <button
                   onClick={() => {
-                    setShowModal(false)
-                    setSendForm(false)
+                    setShowModal(false);
+                    setSendForm(false);
                   }}
                   className="bg-[#FF0C34] hover:bg-red-700 text-white px-4 py-2 rounded-md"
                 >
