@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'; // 👈 força a rota a rodar no ambiente Node.js (não edge)
+
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
