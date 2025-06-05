@@ -147,14 +147,12 @@ export default function HoldingPage() {
               type="string"
               labelTitle={selectFinalidade == "aluguel" ? "Valor de mercado" : "Valor de Aquisição"}
               placeholder="Insira o valor de aquisição"
-              onChange={(e) => {
+  onChange={(e) => {
   const valor = e.target.value;
-
   if (selectFinalidade === "aluguel") {
     setValorMercado(valor);
   } else {
-    const numero = Number(valor.replace(/[^\d]/g, ''));
-    const formatado = numero.toLocaleString("pt-BR", {
+    const formatado = Number(valor.replace(/[^\d]/g, '')).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
