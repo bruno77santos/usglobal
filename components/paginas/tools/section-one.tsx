@@ -33,7 +33,7 @@ export function SectionOne() {
 
   const [showModal, setShowModal] = useState(false)
   const [sendForm, setSendForm] = useState(false)
-  const [_, setFormData] = useState({
+  const [, setFormData] = useState({
   Nome: '',
   Email: '',
   Phone: '',
