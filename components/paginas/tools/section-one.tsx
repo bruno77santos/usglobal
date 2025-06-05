@@ -29,16 +29,19 @@ export function SectionOne() {
     { title: 'Perfil do investidor Global', link: '/paginas/tools/profile' },
   ]
 
+  
+
   const [showModal, setShowModal] = useState(false)
   const [sendForm, setSendForm] = useState(false)
-  const [formData, setFormData] = useState({
-    Nome: '',
-    Email: '',
-    Phone: '',
-    investeNaXP: '',
-    quantoTemInvestido: '',
-    investeNoExterior: '',
-  })
+  const [_, setFormData] = useState({
+  Nome: '',
+  Email: '',
+  Phone: '',
+  investeNaXP: '',
+  quantoTemInvestido: '',
+  investeNoExterior: '',
+});
+
 
   const handleChange = (name: string, value: string) => {
     setFormData(prev => ({

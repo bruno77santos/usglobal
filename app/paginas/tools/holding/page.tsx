@@ -359,7 +359,7 @@ export default function HoldingPage() {
 
         )}
 
-        {selectFinalidade === "venda" ?
+{selectFinalidade === "venda" && (
 
           (
             <div data-off={sim} className="data-[off=true]:block hidden mt-[32px] bg-gray-800 p-6 rounded-lg">
@@ -396,7 +396,7 @@ export default function HoldingPage() {
 
 
           )
-          : ""}
+)}
 
         <h1 className=" mt-[48px]
                 text-[40px] font-[700]">Porque simular</h1>
