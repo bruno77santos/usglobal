@@ -45,33 +45,48 @@ export default function NavBar() {
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-[#0c1d2c] px-4 py-6 space-y-4 absolute w-full left-0 top-[64px] shadow-lg z-40 transition-all duration-300">
-          <div className="flex flex-col items-start space-y-4">
-            <Link href="/" onClick={() => setIsOpen(false)}>
-              <NavIcon icon={<Home size={22} />} label="Início" />
-            </Link>
-            <Link href="/paginas/quem-somos" onClick={() => setIsOpen(false)}>
-              <NavIcon icon={<FileText size={22} />} label="Quem Somos" />
-            </Link>
-            <Link href="/blog" onClick={() => setIsOpen(false)}>
-              <NavIcon icon={<BookOpen size={22} />} label="Blog" />
-            </Link>
-            <Link href="/paginas/tools" onClick={() => setIsOpen(false)}>
-              <NavIcon icon={<Users size={22} />} label="Ferramentas" />
-            </Link>
-            <Link href="/paginas/faqs" onClick={() => setIsOpen(false)}>
-              <NavIcon icon={<HelpCircle size={22} />} label="FAQs" />
-            </Link>
-            <a
-              href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
-              className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-semibold transition w-full text-center"
-            >
-              Agende a sua Reunião
-            </a>
-          </div>
+{isOpen && (
+  <div className="md:hidden bg-[#0c1d2c] px-4 py-6 space-y-4 absolute w-full left-0 top-[64px] shadow-lg z-40 transition-all duration-300">
+    <div className="flex flex-col items-start space-y-4">
+      <Link href="/" onClick={() => setIsOpen(false)}>
+        <div className="flex items-center space-x-2">
+          <Home size={22} />
+          <span className="text-white">Início</span>
         </div>
-      )}
+      </Link>
+      <Link href="/paginas/quem-somos" onClick={() => setIsOpen(false)}>
+        <div className="flex items-center space-x-2">
+          <FileText size={22} />
+          <span className="text-white">Quem Somos</span>
+        </div>
+      </Link>
+      <Link href="/blog" onClick={() => setIsOpen(false)}>
+        <div className="flex items-center space-x-2">
+          <BookOpen size={22} />
+          <span className="text-white">Blog</span>
+        </div>
+      </Link>
+      <Link href="/paginas/tools" onClick={() => setIsOpen(false)}>
+        <div className="flex items-center space-x-2">
+          <Users size={22} />
+          <span className="text-white">Ferramentas</span>
+        </div>
+      </Link>
+      <Link href="/paginas/faqs" onClick={() => setIsOpen(false)}>
+        <div className="flex items-center space-x-2">
+          <HelpCircle size={22} />
+          <span className="text-white">FAQs</span>
+        </div>
+      </Link>
+      <a
+        href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
+        className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-semibold transition w-full text-center"
+      >
+        Agende a sua Reunião
+      </a>
+    </div>
+  </div>
+)}
     </nav>
   )
 }
