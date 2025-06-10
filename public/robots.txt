@@ -1,6 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
+# Host
+Host: https://www.seusite.com.br
 
-# link pro sitemap
-Sitemap: https://www.investglobal.us/sitemap.xml
+# Sitemaps
+Sitemap: https://www.seusite.com.br/sitemap.xml
