@@ -1,6 +1,6 @@
 'use client'
 
-import Blocs from "./components/blocs";
+//import Blocs from "./components/blocs";
 
 export default function Blog() {
   return (
