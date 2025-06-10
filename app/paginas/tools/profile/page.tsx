@@ -67,8 +67,9 @@ export default function ProfileInvestor() {
         alert('Erro ao enviar formulário.')
       }
     } catch (error) {
-      alert('Erro na requisição.')
-    }
+  console.error('Erro ao enviar formulário:', error)
+  alert('Erro na requisição.')
+}
   }
 
   return (
@@ -259,16 +260,19 @@ export default function ProfileInvestor() {
             <h2 className="text-2xl font-bold mb-6">Identifique-se para receber o material</h2>
             <div className="space-y-4">
               <InputLabel
+                  type="text"
                 labelTitle="Seu nome"
                 placeholder="Digite seu nome"
                 onChange={(e) => handleChange('Nome', e.target.value)}
               />
               <InputLabel
+                  type="email"
                 labelTitle="E-mail"
                 placeholder="Digite seu e-mail"
                 onChange={(e) => handleChange('Email', e.target.value)}
               />
               <InputLabel
+                  type="tel"
                 labelTitle="Telefone"
                 placeholder="(xx) 9xxxx-xxxx"
                 onChange={(e) => handleChange('Phone', e.target.value)}

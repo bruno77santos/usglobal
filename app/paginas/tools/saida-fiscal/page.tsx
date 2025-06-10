@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import InputLabel from '@/components/compartilhados/inputLabel'
-import Hero from '@/components/paginas/tools/profile/hero' // ajuste o path se necessário
+//import Hero from '@/components/paginas/tools/profile/hero' // ajuste o path se necessário
 
 interface FormData {
   isBrazilian: string
