@@ -46,13 +46,13 @@ export default function Tools_Essentials() {
           {[
             {
               href: "/paginas/tools/sp500",
-              img: "/tools/1.png",
+              img: "/tools/1.jpg",
               title: "Simulador S&P 500",
               desc: "Compare seus investimentos com o índice de referência mundial e tire proveito de sua valorização.",
             },
             {
               href: "/paginas/tools/holding",
-              img: "/tools/2.png",
+              img: "/tools/2.jpg",
               title: "Holding",
               desc: "Estruture seus investimentos para sucessão patrimonial e aumente a proteção dos seus ativos.",
             },

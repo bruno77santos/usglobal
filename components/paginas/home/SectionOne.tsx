@@ -22,7 +22,7 @@ export function SectionOne() {
               Investir no exterior traz diversos benefícios. Qualquer pessoa física ou jurídica em situação fiscal regular pode fazer isso com facilidade, direto do computador ou smartphone.
             </p>
             <a
-              href="#contato"
+              href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
               className="mt-2 inline-block bg-[#fd0d34] hover:bg-red-700 text-white font-semibold px-6 py-3 rounded transition-colors w-fit"
             >
               Fale com um especialista

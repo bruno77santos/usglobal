@@ -53,7 +53,7 @@ export default function SectionNine() {
               <h3 className="text-white text-xl font-semibold mb-4">{svc.title}</h3>
               <p className="text-gray-300 flex-1 leading-relaxed">{svc.description}</p>
               <a
-                href="https://wa.me/+5511961014004?text=Ol%C3%A1%20estou%20interessado%20em%20investir!"
+                href="https://wa.me/5511989342259?text=Ol%C3%A1%2C%20estou%20interessado%20em%20investir%20nos%20Estados%20Unidos%21"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-block text-[#fd0d34] font-medium hover:underline"
