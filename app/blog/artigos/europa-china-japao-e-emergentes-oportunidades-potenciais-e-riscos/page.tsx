@@ -1,6 +1,6 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
                           <h1 className='text-[48px] font-[700] text-white leading-[70px]'>Europa, China, Japão e Emergentes: oportunidades, potenciais e riscos envolvidos</h1>
                           <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>
                               Cada vez mais investidores de todos os perfis têm aumentado seu interesse pelo exterior, seja para proteção de patrimônio ou aproveitar oportunidades que não vemos por aqui, como acontece no setor de tecnologia, defesa ou em vários outros, em maior ou menor grau. Afinal, se o Brasil representa menos de 2% do comércio mundial (e excluído o agronegócio essa participação seria ainda menor), por que nos limitamos a investimentos apenas dentro do país? Com o mundo cada vez mais conectado, a tecnologia de comunicação cada vez mais avançada, confiável e a nosso favor, assim como a tecnologia de segurança, praticamente não há mais fronteiras.

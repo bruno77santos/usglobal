@@ -1,6 +1,6 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
                                 <h1 className='text-[48px] font-[700] text-white leading-[70px]'>Enfim, os americanos escolheram Trump. E agora?</h1>
                         <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>
                             Um presidente senil, uma vice-presidente polêmica, um magnata contestado e um cenário eleitoral que, ao menos de acordo com a mídia tradicional, parecia indefinido.

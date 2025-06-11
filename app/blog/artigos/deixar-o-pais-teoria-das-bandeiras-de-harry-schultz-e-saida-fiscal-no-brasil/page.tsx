@@ -1,6 +1,6 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
       <h1 className='text-[48px] font-[700] text-white leading-[70px]'>
                               A saída fiscal e a teoria das bandeiras: oportunidades para otimizar seus recursos.
                           </h1>

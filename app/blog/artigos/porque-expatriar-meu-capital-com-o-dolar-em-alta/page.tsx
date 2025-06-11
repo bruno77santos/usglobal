@@ -1,6 +1,6 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
                           <h1 className='text-[48px] font-[700] text-white leading-[70px]'>Porque expatriar meu capital com o Dólar em alta?</h1>
                           <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>
                               Sabidamente a maior e mais ativa economia do mundo, os Estados Unidos contam com cerca de 6000 empresas listadas nas bolsas NYSE (New York Stock Exchange) e NASDAQ (National Association of Securities Dealers Automated Quotations). Ambas localizadas em Nova York, sendo a primeira a que reúne as empresas dos setores mais tradicionais, como o de alimentos e bebidas, varejo, aviação e financeiro, e a segunda a que concentra empresas do segmento de tecnologia e inovação, como Google/Alphabet, Nvidia e Microsoft.

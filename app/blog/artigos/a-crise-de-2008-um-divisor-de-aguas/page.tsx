@@ -1,7 +1,9 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
-                                <h1 className='text-[48px] font-[700] text-white leading-[70px]'>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
+
+                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight sm:leading-[60px] lg:leading-[70px]">
+
                               A crise de 2008: um divisor de água
                           </h1>
                           <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>

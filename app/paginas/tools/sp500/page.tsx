@@ -245,7 +245,7 @@ export default function SEP() {
       Rentabilidade passada <strong>não garante resultado futuro</strong>.
       Sempre busque a orientação de um assessor qualificado para decisões estratégicas.
       <br /><br />
-      <span className="text-blue-400 font-semibold">Agende uma conversa</span> com um consultor da Invest Global e receba direcionamento personalizado.
+      <span className="text-blue-400 font-semibold">Agende uma conversa</span> com um especialista e receba direcionamento personalizado.
     </p>
   </div>
 

@@ -1,6 +1,6 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
                           <h1 className='text-[48px] font-[700] text-white leading-[70px]'>Joint Tenancy: o que é e quais são seus benefícios?</h1>
                           <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>Joint Tenancy é um instrumento legal que pode ser compreendido como uma guarda-compartilhada de ativos, pelo qual dois ou mais indivíduos dividem a posse de ativos com direitos iguais, incluindo imóveis, contas bancárias e investimentos, sem a burocracia de um inventário. Ocorrendo a falta de um dos seus integrantes, é aplicado o “direito de sobrevivência” ao(s) participante restante(s), com os ativos passando diretamente a estes.</p>
                           <img className='mt-[48px]' src='/temp/7.jpeg' alt='joint tenancy' />

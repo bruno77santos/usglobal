@@ -1,7 +1,10 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
-       <h1 className='text-[48px] font-[700] text-white leading-[70px]'>Investimentos nos Estados Unidos: oportunidade ou estratégia?</h1>
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
+
+             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight sm:leading-[60px] lg:leading-[70px]">
+
+        Investimentos nos Estados Unidos: oportunidade ou estratégia?</h1>
                         <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>Sabidamente a maior e mais ativa economia do mundo, os Estados Unidos contam com cerca de 6000 empresas listadas nas bolsas NYSE (New York Stock Exchange) e NASDAQ (National Association of Securities Dealers Automated Quotations). Ambas localizadas em Nova York, sendo a primeira a que reúne as empresas dos setores mais tradicionais, como o de alimentos e bebidas, varejo, aviação e financeiro, e a segunda a que concentra empresas do segmento de tecnologia e inovação, como Google/Alphabet, Nvidia e Microsoft.
                             Apenas o grupo formado pelas maiores empresas de tecnologia do mundo, chamado de “sete magníficas”, com Alphabet, Nvidia, Microsoft, Amazon, Tesla, Meta e Apple soma um valor de mercado em 2024 mais de 3 vezes maior do que o PIB brasileiro. Sim, um punhado de empresas, entre as mais influentes do mundo, das quais praticamente todos nós somos usuários de algum de seus serviços, valem mais do que tudo o que o Brasil produz.
                             <br />

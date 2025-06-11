@@ -1,6 +1,6 @@
 export default function ArtigoInvestimentos() {
   return (
-    <div className="max-w-3xl mx-auto mt-32 text-white">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-0 mt-16 text-white">
                         <h1 className='text-[48px] font-[700] text-white leading-[70px]'>Meu capital está mesmo seguro fora do país?</h1>
                         <p className='text-[20px] text-white leading-[36.04px] mt-[64px]'>
                             Essa é uma questão que muitos investidores fazem, pois é natural sentir-se mais confortável com a sensação de ter o dinheiro ao seu lado, em instituições com as quais estamos familiarizados.
