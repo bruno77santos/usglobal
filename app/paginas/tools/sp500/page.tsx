@@ -1,7 +1,5 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-
 import { useState } from 'react'
 import { Bar } from 'react-chartjs-2'
 import {
