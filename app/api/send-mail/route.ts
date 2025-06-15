@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   try {
     const result = await resend.emails.send({
       //from: 'InvestGlobal <contato@investglobal.us>',
-      from: 'InvestGlobal <brsantos88@yahoo.com.br>',
+      from: 'InvestGlobal <contato@caulfieldco.com.br>',
       to: ['brsantos88@yahoo.com.br'],
       subject: `Novo lead: ${data.Nome}`,
       html: `
