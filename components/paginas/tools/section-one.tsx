@@ -33,7 +33,8 @@ export function SectionOne() {
 
   const [showModal, setShowModal] = useState(false)
   const [sendForm, setSendForm] = useState(false)
-  const [, setFormData] = useState({
+  const [formData, setFormData] = useState({
+
   Nome: '',
   Email: '',
   Phone: '',
@@ -51,11 +52,29 @@ export function SectionOne() {
   }
 
   const handleSubmit = async () => {
-    // simulação de envio
-    setTimeout(() => {
-      setSendForm(true);
-    }, 1000)
+  try {
+    const response = await fetch('/api/send-mail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      console.error('Erro ao enviar e-mail:', error)
+      alert('Erro ao enviar os dados.')
+      return
+    }
+
+    setSendForm(true)
+  } catch (error) {
+    console.error('Erro na requisição:', error)
+    alert('Erro ao enviar o formulário.')
   }
+}
+
 
   return (
     <>

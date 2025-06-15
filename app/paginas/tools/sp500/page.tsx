@@ -46,13 +46,22 @@ export default function SEP() {
 
 const handleSubmit = async () => {
   try {
+      const simulationData = {
+    "Valor Inicial": valorInicial.toLocaleString(),
+    "Período": `${periodo} anos`,
+    "Aporte Mensal": aporte.toLocaleString(),
+    "Taxa de Retorno": `${taxaRetorno}%`,
+    "Resultado Final": capitalFinal.toLocaleString()
+  }
 const response = await fetch('/api/send-mail', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(formData),
-})
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      page: 'Simulador S&P 500',
+      user: formData,
+      simulation: simulationData
+    })
+  })
 
 
     if (!response.ok) {

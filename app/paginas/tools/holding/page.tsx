@@ -1,136 +1,147 @@
-'use client';
-
-import { useState } from "react";
-import InputLabel from '@/components/compartilhados/inputLabel';
-import InputLabelSelect from '@/components/compartilhados/inputLabelSelect';
-import { Hero } from "@/components/paginas/tools/holding/hero";
+'use client'
+import { useState } from 'react'
+import InputLabel from '@/components/compartilhados/inputLabel'
+import InputLabelSelect from '@/components/compartilhados/inputLabelSelect'
+import { Hero } from '@/components/paginas/tools/holding/hero'
 
 type TabelaResultado = {
-  ano: number;
-  aluguelPF: number;
-  aluguelHolding: number;
-  custoAnualHolding: number;
-  diferencaCustos: number;
-};
+  ano: number
+  aluguelPF: number
+  aluguelHolding: number
+  custoAnualHolding: number
+  diferencaCustos: number
+}
 
 type FormDataType = {
-  Nome?: string;
-  Email?: string;
-  Phone?: string;
-  investeNaXP?: string;
-  quantoTemInvestido?: string;
-  investeNoExterior?: string;
-};
+  Nome?: string
+  Email?: string
+  Phone?: string
+  investeNaXP?: string
+  quantoTemInvestido?: string
+  investeNoExterior?: string
+}
 
 export default function HoldingPage() {
-  const [selectFinalidade, setSelectFinalidade] = useState<string>("");
-  const [valorAquicicao, setValorAquicicao] = useState<string>("");
-  const [valorMercado, setValorMercado] = useState<string>("");
-  const [valorAluguel, setValorAluguel] = useState<string>("");
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [qtdImoveis, setQtdImoveis] = useState<string>("");
-  const [vendaValues, setVendaValues] = useState({ LucroVendaPF: "", LucroVendaHolding: "" });
-  const [sim, setSim] = useState(false);
-  const [tabela, setTabela] = useState<TabelaResultado[]>([]);
-  const [formData, setFormData] = useState<FormDataType>({});
-
-  const calcularResultado = () => {
-    const aquisicao = Number(valorAquicicao.replace(/[^\d]/g, ""));
-    const mercado = Number(valorMercado.replace(/[^\d]/g, ""));
-    const aluguel = Number(valorAluguel.replace(/[^\d]/g, ""));
-
-    if (selectFinalidade === "venda") {
-      const lucroVenda = mercado - aquisicao;
-      const impostoVenda = lucroVenda * 0.15;
-      const impostoHolding = mercado * 0.06;
-
-      setVendaValues({
-        LucroVendaPF: impostoVenda.toFixed(2),
-        LucroVendaHolding: impostoHolding.toFixed(2),
-      });
-      return;
-    }
-
-    const metadeImoveisAlugados = qtdImoveis === "sim";
-    const custosAdvogado = 50000;
-    const taxaMercado = mercado * 0.03;
-    const custoInicialHolding = metadeImoveisAlugados ? taxaMercado + custosAdvogado : custosAdvogado;
-
-    const novaTabela: TabelaResultado[] = [];
-    let ano = 1;
-
-    while (ano <= 10) {
-      const aluguelPF = (aluguel * 0.275) * 12;
-      const aluguelHolding = (aluguel * 0.11) * 12;
-
-      const custoHoldingAnual = ano === 1 ? custoInicialHolding + aluguelHolding : aluguelHolding;
-      const custoPFAnual = aluguelPF;
-
-      const diferencaCustos = custoHoldingAnual - custoPFAnual;
-
-      novaTabela.push({
-        ano,
-        aluguelPF: Number(custoPFAnual.toFixed(2)),
-        aluguelHolding: Number(aluguelHolding.toFixed(2)),
-        custoAnualHolding: Number(custoHoldingAnual.toFixed(2)),
-        diferencaCustos: Number(diferencaCustos.toFixed(2)),
-      });
-
-      ano++;
-    }
-
-    setTabela(novaTabela);
-  };
+  const [selectFinalidade, setSelectFinalidade] = useState<string>('')
+  const [valorAquicicao, setValorAquicicao] = useState<string>('')
+  const [valorMercado, setValorMercado] = useState<string>('')
+  const [valorAluguel, setValorAluguel] = useState<string>('')
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [vendaValues, setVendaValues] = useState({ LucroVendaPF: '', LucroVendaHolding: '' })
+  const [sim, setSim] = useState(false)
+  const [tabela, setTabela] = useState<TabelaResultado[]>([])
+  const [formData, setFormData] = useState<FormDataType>({})
+  const [percAlugado, setPercAlugado] = useState<number>(0)
+  const [prazoSimulacao, setPrazoSimulacao] = useState<number>(0)
+  const [mensagemResultado, setMensagemResultado] = useState<string | null>(null)
+  const [payback, setPayback] = useState<number | null>(null)
 
   const handleChange = (name: keyof FormDataType, value: string) => {
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
+
+  const calcularResultado = () => {
+    const aquisicao = Number(valorAquicicao.replace(/[^\d]/g, ''))
+    const mercado = Number(valorMercado.replace(/[^\d]/g, ''))
+    const aluguelMensal = Number(valorAluguel.replace(/[^\d]/g, ''))
+
+    if (selectFinalidade === 'venda') {
+      const ganhoCapital = mercado - aquisicao
+      const impostoPF = ganhoCapital * 0.15
+      const impostoHolding = mercado * 0.06
+      const economia = impostoPF - impostoHolding
+      const custoEstrutura = 25000
+
+      setVendaValues({
+        LucroVendaPF: impostoPF.toFixed(2),
+        LucroVendaHolding: impostoHolding.toFixed(2),
+      })
+
+      setPayback(null)
+
+      if (economia > custoEstrutura) {
+        setMensagemResultado('✅ Compensa estruturar a holding para vender o imóvel.')
+      } else {
+        setMensagemResultado('⚠️ Não compensa estruturar a holding apenas para a venda.')
+      }
+      return
+    }
+
+    const receitaAnual = aluguelMensal * 12
+    const impostoPF = receitaAnual * 0.275
+    const impostoHolding = receitaAnual * 0.11
+    const economiaAnual = impostoPF - impostoHolding
+    const custoBase = 25000
+    const aplicaITBI = percAlugado > 50
+    const custoTotal = aplicaITBI ? custoBase + mercado * 0.04 : custoBase
+    const calculatedPayback = custoTotal / economiaAnual
+    const compensa = prazoSimulacao >= calculatedPayback
+
+    const novaTabela: TabelaResultado[] = []
+
+    for (let ano = 1; ano <= prazoSimulacao; ano++) {
+      novaTabela.push({
+        ano,
+        aluguelPF: impostoPF * ano,
+        aluguelHolding: impostoHolding * ano,
+        custoAnualHolding: custoTotal,
+        diferencaCustos: economiaAnual * ano,
+      })
+    }
+
+    setTabela(novaTabela)
+    setPayback(calculatedPayback)
+
+    if (compensa) {
+      setMensagemResultado('✅ Compensa estruturar a holding para os aluguéis.')
+    } else {
+      setMensagemResultado('⚠️ Não compensa estruturar a holding para os aluguéis nesse prazo.')
+    }
+  }
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("https://api.trello.com/1/cards", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          idList: "678ec50cd39e18f5ebca5e48",
-          key: "5b6e1d320af14c490be1bda72621e7fe",
-          token: "ATTAf91a6f85ce066af1172582f6db7f18da8a199ad007cb11ae54bd8f5d55a26e97F65CF22C",
-          name: `Novo investidor: ${formData.Nome}`,
-          desc: `Respostas do formulário: ${JSON.stringify(formData, null, 2)}`,
-        }),
-      });
+      const simulationData = {
+    "Cenário": selectFinalidade,
+    "Valor de Aquisição": valorAquicicao,
+    "Valor de Mercado": valorMercado,
+    "Resultado": mensagemResultado,
+    "Payback": payback ? `${payback.toFixed(2)} anos` : 'N/A'
+  }
+  const response = await fetch('/api/send-mail', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      page: 'Simulador Holding',
+      user: formData,
+      simulation: simulationData
+    })
+  })
 
       if (!response.ok) {
-        console.error("Erro ao enviar formulário:", response.statusText);
-        alert("Erro ao enviar formulário.");
+        const error = await response.json()
+        console.error('Erro ao enviar e-mail:', error)
+        alert('Erro ao enviar os dados.')
+        return
       }
     } catch (error) {
-      console.error("Erro na requisição:", error);
-      alert("Erro ao enviar formulário.");
+      console.error('Erro ao enviar e-mail:', error)
+      alert('Erro ao enviar o formulário.')
     }
-  };
+  }
 
-  const handleModalSubmit = () => setShowModal(false);
+  const handleModalSubmit = () => setShowModal(false)
 
   return (
     <>
       <Hero />
-      {/* resto do layout e JSX segue igual */}
-      <section className="w-[90%] max-w-[1174px] mx-auto mt-[83px] text-white mb-[102px]">
-        <h1 className="text-[40px] font-[700]">Como usar a ferramenta de cálculo</h1>
-        <p className="text-[24px] font-[500] mt-[16px]">
-          Preencha os campos indicados com os valores, períodos, taxas e índices, de acordo com a simulação desejada.
-          <br />
-          <br />
-          Após a inserção do último dado, a calculadora irá apresentar automaticamente o resultado da simulação.
-        </p>
-
-        <div className="mt-[48px] w-full flex flex-col flex-wrap gap-7">
+      <section className="w-[90%] max-w-[1174px] mx-auto mt-12 text-white mb-[102px]">
+        
+        <h1 className="text-[40px] font-[700]">Simulador de Holding</h1>
+        <div className="mt-6 w-full flex flex-col flex-wrap gap-7">
           <div className="flex items-center gap-5 w-full sm:flex-row flex-col">
             <InputLabelSelect
               option={
@@ -143,257 +154,147 @@ export default function HoldingPage() {
               onChange={(e) => setSelectFinalidade(e.target.value)}
             />
             <InputLabel
-
               type="string"
-              labelTitle={selectFinalidade == "aluguel" ? "Valor de mercado" : "Valor de Aquisição"}
-              placeholder="Insira o valor de aquisição"
-  onChange={(e) => {
-  const valor = e.target.value;
-  if (selectFinalidade === "aluguel") {
-    setValorMercado(valor);
-  } else {
-    const formatado = Number(valor.replace(/[^\d]/g, '')).toLocaleString("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
-setValorAquicicao(formatado);
-  }
-}}
-
+              labelTitle="Valor de aquisição"
+              placeholder="R$ 500.000"
+              onChange={(e) => setValorAquicicao(e.target.value)}
             />
             <InputLabel
               type="string"
-              labelTitle={selectFinalidade == "aluguel" ? "Rendimento dos alugueis" : "Valor de Mercado"}
-              placeholder="Insira o valor de mercado"
-             onChange={(e) => {
-  const valor = e.target.value;
-  if (selectFinalidade === "aluguel") {
-    setValorAluguel(valor);
-  } else {
-    setValorMercado(valor);
-  }
-}}
-
+              labelTitle="Valor de mercado"
+              placeholder="R$ 800.000"
+              onChange={(e) => setValorMercado(e.target.value)}
             />
+            {selectFinalidade === 'aluguel' && (
+              <InputLabel
+                type="string"
+                labelTitle="Valor mensal dos aluguéis"
+                placeholder="R$ 3.000"
+                onChange={(e) => setValorAluguel(e.target.value)}
+              />
+            )}
           </div>
-
-          {selectFinalidade === "aluguel" && (
-            <InputLabelSelect
-              onChange={(e) => setQtdImoveis(e.target.value)}
-              labelTitle="A quantidade dos imóveis alugados equivale a mais de 50% dos seus imóveis?"
-              option={
-                <>
-                  <option value="sim">Sim</option>
-                  <option value="não">Não</option>
-                </>
-              }
-            />
+          {selectFinalidade === 'aluguel' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <InputLabel
+                type="number"
+                labelTitle="% dos imóveis que estão alugados"
+                placeholder="Ex: 60"
+                onChange={(e) => setPercAlugado(Number(e.target.value))}
+              />
+              <InputLabel
+                type="number"
+                labelTitle="Prazo da simulação (em anos)"
+                placeholder="Ex: 10"
+                onChange={(e) => setPrazoSimulacao(Number(e.target.value))}
+              />
+            </div>
           )}
         </div>
-
-        {/* Modal */}
-        {showModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[99] overflow-auto">
-            <div className="bg-slate-700 text-white p-8 rounded-md w-[600px] max-h-[90vh] overflow-y-auto">
-              <h2 className="text-[24px] font-bold mb-4">Preencha alguns dados</h2>
-              <div className="flex items-center gap-2">
-                <InputLabel
-                  type="name"
-                  labelTitle="Seu nome"
-                  placeholder={"Digite o seu nome"}
-                  onChange={(e) => handleChange("Nome", e.target.value)}
-                />
-                <InputLabel
-                  type="email"
-                  labelTitle="E-mail"
-                  placeholder="Digite seu e-mail"
-                  onChange={(e) => handleChange("Email", e.target.value)}
-                />
-              </div>
-              <br />
-              <InputLabel
-                type="phone"
-                labelTitle="Telefone"
-                placeholder={"DD 9 0000-0000"}
-                onChange={(e) => handleChange("Phone", e.target.value)}
-              />
-
-              <h2 className="text-[24px] font-bold mb-4 mt-6">Investe na XP?</h2>
-              <label htmlFor="investeNaXP" className="flex items-center gap-2">
-                <input name="investeNaXP" type="radio" onChange={() => handleChange("investeNaXP", "Sim")} />
-                <p>Sim</p>
-              </label>
-              <label htmlFor="investeNaXP" className="flex items-center gap-2">
-                <input name="investeNaXP" type="radio" onChange={() => handleChange("investeNaXP", "Não")} />
-                <p>Não</p>
-              </label>
-
-              <h2 className="text-[24px] font-bold mb-4 mt-6">Quanto tem investido?</h2>
-              <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-                <input name="quantoTemInvestido" type="radio" onChange={() => handleChange("quantoTemInvestido", "Não tenho investimentos")} />
-                <p>Não tenho investimentos</p>
-              </label>
-
-              <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-                <input name="quantoTemInvestido" type="radio" onChange={() => handleChange("quantoTemInvestido", "Abaixo de 100k")} />
-                <p>Abaixo de 100k</p>
-              </label>
-
-              <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-                <input name="quantoTemInvestido" type="radio" onChange={() => handleChange("quantoTemInvestido", "Entre 100k e 300k")} />
-                <p>Entre 100k e 300k</p>
-              </label>
-
-              <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-                <input name="quantoTemInvestido" type="radio" onChange={() => handleChange("quantoTemInvestido", "Entre 300k a 1milhão")} />
-                <p>Entre 300k a 1milhão</p>
-              </label>
-              <label htmlFor="quantoTemInvestido" className="flex items-center gap-2">
-                <input name="quantoTemInvestido" type="radio" onChange={() => handleChange("quantoTemInvestido", "Acima de 1milhão")} />
-                <p>Acima de 1milhão</p>
-              </label>
-
-              <h2 className="text-[24px] font-bold mb-4 mt-6">Investe no exterior?</h2>
-
-              <label htmlFor="investeNoExterior" className="flex items-center gap-2">
-                <input name="investeNoExterior" type="radio" onChange={() => handleChange("investeNoExterior", "Sim")} />
-                <p>Sim</p>
-              </label>
-              <label htmlFor="investeNoExterior" className="flex items-center gap-2">
-                <input name="investeNoExterior" type="radio" onChange={() => handleChange("investeNoExterior", "Não")} />
-                <p>Não</p>
-              </label>
-
-
-
-              <label className="flex gap-2 mt-5 text-sm">
-                <input type="checkbox" />
-                Estou de acordo com o envio de comunicações, termos e condições e politica da Invest Global Us
-              </label>
-
-              <label className="flex gap-2 mt-5 text-sm">
-                <input type="checkbox" />
-                Estou de acordo com a politica de privacidade da Invest Global Us
-              </label>
-              <div className="flex justify-between mt-4">
-                <button className="px-4 py-2 bg-gray-400 text-white rounded-md" onClick={() => setShowModal(false)}>
-                  Cancelar
-                </button>
-                <button
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md"
-                  onClick={() => {
-
-                    handleSubmit();
-                    calcularResultado();
-                    handleModalSubmit();
-                    setSim(true);
-                  }}
-                >
-                  Confirmar
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-
         <button
           onClick={() => setShowModal(true)}
-          className="mt-[20px] lg:flex py-3.5 px-4 text-lg font-medium rounded-lg transition-all duration-300 text-[#E6E6E6] bg-[#FF0C34] hover:opacity-70 hover:text-white text-nowrap"
+          className="mt-8 py-3 px-6 text-lg font-medium rounded-lg transition-all duration-300 text-white bg-[#FF0C34] hover:opacity-80"
         >
           Calcular Resultado
         </button>
 
-        {/* Tabela com os resultados */}
-        {selectFinalidade === "aluguel" && (
+        {/* Resultados Dinâmicos */}
+        {sim && (
+          <div className="mt-12 bg-white p-6 rounded-lg shadow-md text-gray-800">
+            {selectFinalidade === 'venda' && (
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Impostos - Estrutura Holding Patrimonial (Venda de Bens)</h2>
+                <p className="mb-4 text-gray-500">
+                  Veja abaixo o valor de cada imposto a ser pago (+ custo estruturação da Holding + ITBI):
+                </p>
+                <div className="bg-gray-100 p-4 rounded-lg">
+                  <p className="mb-2">
+                    <strong>Valor do Total do Imposto:</strong> R$ {Number(vendaValues.LucroVendaHolding).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </p>
+                  <p className="mb-2">
+                    Inclui Ganho de Capital + ITBI + Custo da Holding.
+                  </p>
+                </div>
+                <h2 className="text-2xl font-bold mt-8 mb-4">Impostos - Estrutura sem Holding Patrimonial</h2>
+                <p className="mb-2">
+                  <strong>Valor do Imposto (Ganho de Capital):</strong> R$ {Number(vendaValues.LucroVendaPF).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </p>
+              </div>
+            )}
 
-          <div data-off={sim} className="data-[off=true]:block hidden mt-[32px] bg-gray-800 p-6 rounded-lg">
-            <h2 className="text-[28px] font-bold mb-4">Resultados</h2>
-            <div data-off={sim} className="data-[off=true]:block hidden mt-[32px] bg-gray-800 p-6 rounded-lg">
-              <h2 className="text-[28px] font-bold mb-4">Resultados</h2>
+            {selectFinalidade === 'aluguel' && tabela.length > 0 && (
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Impostos - Estrutura Holding Patrimonial (Rendimentos)</h2>
+                <p className="mb-4 text-gray-500">
+                  Veja abaixo o valor de cada imposto a ser pago:
+                </p>
+                <div className="bg-gray-100 p-4 rounded-lg">
+                  <p className="mb-2"><strong>PIS:</strong> R$ 0,19</p>
+                  <p className="mb-2"><strong>COFINS:</strong> R$ 0,90</p>
+                  <p className="mb-2"><strong>ADICIONAL IRPJ:</strong> R$ 0,00</p>
+                  <p className="mb-2"><strong>IRPJ:</strong> R$ 1,44</p>
+                  <p className="mb-2"><strong>CSLL:</strong> R$ 0,86</p>
+                  <p className="mb-2">
+                    <strong>Valor do Total do Imposto Mensal - Lucro Presumido:</strong> R$ {tabela[0].aluguelHolding.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </p>
+                  <p className="mb-2">
+                    <strong>Valor do Imposto - ITBI:</strong> R$ {tabela[0].custoAnualHolding.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Para fins de cálculo, consideramos algumas premissas: COFINS: 3% | IRPJ: 0,65% | ITBI: 3% | Inflação: 6% ao ano | Custo Abertura Holding: R$ 10.000
+                  </p>
+                </div>
 
-              <div className="overflow-x-auto">
-                <table className="table-auto w-full border-collapse min-w-max">
+                <h2 className="text-2xl font-bold mt-8 mb-4">Impostos - Estrutura sem Holding Patrimonial</h2>
+                <p className="mb-2">
+                  <strong>Valor do Imposto Mensal - IRPF:</strong> R$ {tabela[0].aluguelPF.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </p>
+
+                <h2 className="text-2xl font-bold mt-8 mb-4">Veja abaixo a projeção dos seus impostos:</h2>
+                <p className="mb-4 text-gray-500">
+                  Sua economia total é de R$ {(tabela[tabela.length - 1]?.diferencaCustos || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })} em {prazoSimulacao} anos
+                </p>
+
+                <table className="w-full border-collapse text-left">
                   <thead>
-                    <tr>
-                      <th className="border-b-2 px-4 py-2">Ano</th>
-                      <th className="border-b-2 px-4 py-2">Custo PF</th>
-                      <th className="border-b-2 px-4 py-2">Custo Holding</th>
-                      <th className="border-b-2 px-4 py-2">Economia com a holding</th>
+                    <tr className="bg-gray-200">
+                      <th className="border px-4 py-2">Ano</th>
+                      <th className="border px-4 py-2">Com Holding</th>
+                      <th className="border px-4 py-2">Sem Holding</th>
+                      <th className="border px-4 py-2">Economia</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {tabela.map((row) => (
-                      <tr key={row.ano}>
-                        <td className="border-b px-4 py-2 text-center">{row.ano}</td>
-
-                        <td className="border-b px-4 py-2 text-center">
-                          {row.aluguelPF.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                        </td>
-                        <td className="border-b px-4 py-2 text-center">
-                          {row.custoAnualHolding.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                        </td>
-                        <td className="border-b px-4 py-2 text-center text-green-400">
-                          {row.diferencaCustos.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                    {tabela.map((item, index) => (
+                      <tr key={index}>
+                        <td className="border px-4 py-2">{item.ano}</td>
+                        <td className="border px-4 py-2">R$ {item.aluguelHolding.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                        <td className="border px-4 py-2">R$ {item.aluguelPF.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                        <td className="border px-4 py-2 text-red-500">
+                          R$ {item.diferencaCustos.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
-
-
-            <div data-off={sim} className="data-[off=true]:block hidden mt-[24px] p-4 bg-gray-700 rounded-lg text-center">
-              <h3 className="text-[20px] font-semibold">
-                Os cálculos favorecem a Holding.
-              </h3>
-              <p className="mt-2">
-                Recomendamos uma análise detalhada com um especialista.{" "}
-                <a
-                  target="_blank"
-                  href="https://wa.me/+5511961014004?text=Ol%C3%A1%20estou%20interessado%20em%20investir!"
-                  className="text-blue-400 underline"
-                >
-                  Clique aqui para falar com a Invest Global.
-                </a>
-              </p>
-            </div>
+            )}
           </div>
-
         )}
 
-{selectFinalidade === "venda" && (
-  <div data-off={sim} className="data-[off=true]:block hidden mt-[32px] bg-gray-800 p-6 rounded-lg">
-    <h2 className=" text-[28px] font-bold mb-4">Resultados</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[18px]">
-      <div className="bg-gray-900 p-4 rounded-lg">
-        <h3 className="font-semibold">Pessoa Física</h3>
-        <p>Imposto sobre o ganho de capital: <strong>R$ {vendaValues.LucroVendaPF}</strong></p>
-      </div>
-      <div className="bg-gray-900 p-4 rounded-lg">
-        <h3 className="font-semibold">Holding</h3>
-        <p>Imposto sobre o valor de mercado: <strong>R$ {vendaValues.LucroVendaHolding}</strong></p>
-      </div>
-    </div>
+        {mensagemResultado && (
+          <div className="mt-6 p-4 bg-gray-700 rounded-lg text-lg text-white font-semibold text-center">
+            {mensagemResultado}
+          </div>
+        )}
 
-    <div data-off={sim} className="data-[off=true]:block hidden mt-[24px] p-4 bg-gray-700 rounded-lg text-center">
-      <h3 className="text-[20px] font-semibold">Os cálculos favorecem a Holding.</h3>
-      <p className="mt-2">
-        Recomendamos uma análise detalhada com um especialista.{" "}
-        <a
-          target="_blank"
-          href="https://wa.me/+5511920914081?text=Ol%C3%A1%20estou%20interessado%20em%20investir!"
-          className="text-blue-400 underline"
-        >
-          Clique aqui para falar com a Invest Global.
-        </a>
-      </p>
-    </div>
-  </div>
-)}
+        {payback !== null && (
+          <div className="mt-4 p-4 bg-gray-700 rounded-lg text-center text-white text-lg">
+            <strong>Payback estimado:</strong> {payback.toFixed(2)} anos
+          </div>
+        )}
 
-
+        {/* Seções institucionais */}
         <h1 className=" mt-[48px]
                 text-[40px] font-[700]">Porque simular</h1>
         <p className="text-[24px font-[500] mt-[16px]">
@@ -422,10 +323,70 @@ setValorAquicicao(formatado);
           <br />
           A formação de uma holding é mais simples e menos custosa do que a de uma Offshore, mas pode nem sempre ser a opção mais adequada. Dependendo de cada caso, ferramentas como o Joint Tenancy podem ser aplicados. Para conhecer mais sobre essa ferramenta, consulte nosso artigo <a href="#" target="_blank" className="text-red-500">clicando aqui</a>.
         </p>
-
-
-
       </section>
+
+      {/* Modal com formulário */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-[99]">
+          <div className="bg-white text-[#0c1d2c] rounded-lg p-8 w-full max-w-xl shadow-xl max-h-[90vh] overflow-y-auto">
+            <h2 className="text-2xl font-bold mb-4">Preencha seus dados</h2>
+            <div className="flex flex-col gap-4">
+              <div className="flex gap-4">
+                <InputLabel type="name" labelTitle="Seu nome" placeholder="Digite seu nome" onChange={(e) => handleChange("Nome", e.target.value)} />
+                <InputLabel type="email" labelTitle="E-mail" placeholder="Digite seu e-mail" onChange={(e) => handleChange("Email", e.target.value)} />
+              </div>
+              <InputLabel type="phone" labelTitle="Telefone" placeholder="DDD 9 0000-0000" onChange={(e) => handleChange("Phone", e.target.value)} />
+
+              <fieldset className="space-y-2">
+                <legend className="font-semibold">Investe na XP?</legend>
+                {["Sim", "Não"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2">
+                    <input type="radio" name="investeNaXP" onChange={() => handleChange("investeNaXP", opt)} />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </fieldset>
+
+              <fieldset className="space-y-2">
+                <legend className="font-semibold">Quanto tem investido?</legend>
+                {["Não tenho investimentos", "Abaixo de 100k", "Entre 100k e 300k", "Entre 300k a 1milhão", "Acima de 1milhão"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2">
+                    <input type="radio" name="quantoTemInvestido" onChange={() => handleChange("quantoTemInvestido", opt)} />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </fieldset>
+
+              <fieldset className="space-y-2">
+                <legend className="font-semibold">Investe no exterior?</legend>
+                {["Sim", "Não"].map((opt) => (
+                  <label key={opt} className="flex items-center gap-2">
+                    <input type="radio" name="investeNoExterior" onChange={() => handleChange("investeNoExterior", opt)} />
+                    <span>{opt}</span>
+                  </label>
+                ))}
+              </fieldset>
+
+              <div className="flex justify-end gap-4 mt-4">
+                <button onClick={() => setShowModal(false)} className="px-4 py-2 rounded-md bg-gray-500 text-white">
+                  Cancelar
+                </button>
+                <button
+                  onClick={() => {
+                    handleSubmit()
+                    calcularResultado()
+                    handleModalSubmit()
+                    setSim(true)
+                  }}
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white"
+                >
+                  Confirmar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
-  );
+  )
 }

@@ -1,33 +1,55 @@
-export const runtime = 'nodejs'; // 👈 força a rota a rodar no ambiente Node.js (não edge)
-
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
-  const data = await req.json()
+  const body = await req.json()
+
+  const { page, user, simulation } = body
+
+  if (!page || !user) {
+    return NextResponse.json({ success: false, error: 'Dados incompletos' }, { status: 400 })
+  }
 
   try {
+    // Monta conteúdo do e-mail com base nos dados enviados
+    let emailHtml = `
+      <h2>Novo lead recebido</h2>
+      <p><strong>Página:</strong> ${page}</p>
+
+      <h3>Dados do Usuário</h3>
+      <ul>
+        <li><strong>Nome:</strong> ${user.Nome || 'Não informado'}</li>
+        <li><strong>Email:</strong> ${user.Email || 'Não informado'}</li>
+        <li><strong>Telefone:</strong> ${user.Phone || 'Não informado'}</li>
+        <li><strong>Investe na XP?:</strong> ${user.investeNaXP || 'Não informado'}</li>
+        <li><strong>Quanto tem investido?:</strong> ${user.quantoTemInvestido || 'Não informado'}</li>
+        <li><strong>Investe no exterior?:</strong> ${user.investeNoExterior || 'Não informado'}</li>
+      </ul>
+    `
+
+    // Adiciona os dados da simulação se existirem
+    if (simulation) {
+      emailHtml += `
+        <h3>Simulação</h3>
+        <ul>
+          ${Object.entries(simulation).map(([key, value]) => `<li><strong>${key}:</strong> ${value}</li>`).join('')}
+        </ul>
+      `
+    }
+
+    // Envia e-mail
     const result = await resend.emails.send({
-      //from: 'InvestGlobal <contato@investglobal.us>',
       from: 'InvestGlobal <contato@caulfieldco.com.br>',
       to: ['brsantos88@yahoo.com.br'],
-      subject: `Novo lead: ${data.Nome}`,
-      html: `
-        <h1>Novo formulário recebido</h1>
-        <p><strong>Nome:</strong> ${data.Nome}</p>
-        <p><strong>Email:</strong> ${data.Email}</p>
-        <p><strong>Telefone:</strong> ${data.Phone}</p>
-        <p><strong>Investe na XP:</strong> ${data.investeNaXP}</p>
-        <p><strong>Quanto tem investido:</strong> ${data.quantoTemInvestido}</p>
-        <p><strong>Investe no exterior:</strong> ${data.investeNoExterior}</p>
-      `,
+      subject: `[Formulário] ${page} - ${user.Nome || 'Usuário'} `,
+      html: emailHtml,
     })
 
     return NextResponse.json({ success: true, result })
   } catch (error) {
-    console.error('Erro no envio:', error)
+    console.error('Erro ao enviar e-mail:', error)
     return NextResponse.json({ success: false, error }, { status: 500 })
   }
 }

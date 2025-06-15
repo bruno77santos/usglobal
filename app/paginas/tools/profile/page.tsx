@@ -1,10 +1,7 @@
-'use client';
-
-import { useState } from 'react';
-//import InputRadio from '@/components/compartilhados/inputRadio';
-import Hero from '@/components/paginas/tools/profile/hero';
-import InputLabel from '@/components/compartilhados/inputLabel';
-
+'use client'
+import { useState } from 'react'
+import Hero from '@/components/paginas/tools/profile/hero'
+import InputLabel from '@/components/compartilhados/inputLabel'
 
 type FormData = {
   Nome: string
@@ -18,7 +15,7 @@ type FormData = {
   investmentHorizon?: string
   reactionToLosses?: string
   internationalInvestmentKnowledge?: string
-  investmentsOutsideBrazil?: string
+  investmentsOutsideBrazil?: string // Sem '?' aqui
   percentageInvestmentOutsideBrazil?: string
   concernInvestingOutsideBrazil?: string
   importantInvestmentStrategy?: string
@@ -33,9 +30,10 @@ export default function ProfileInvestor() {
     Email: '',
     Phone: '',
   })
+
   const [showModal, setShowModal] = useState<boolean>(false)
 
-  const handleChange = (name: keyof FormData | string, value: string) => {
+  const handleChange = (name: keyof FormData, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -44,32 +42,59 @@ export default function ProfileInvestor() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('https://api.trello.com/1/cards',  {
+      // Envia os dados para a API de e-mail
+      const response = await fetch('/api/send-mail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          idList: '678ec4a34374ed91899a4752',
-          key: '5b6e1d320af14c490be1bda72621e7fe',
-          token: 'ATTAf91a6f85ce066af1172582f6db7f18da8a199ad007cb11ae54bd8f5d55a26e97F65CF22C',
-          name: `+ Investidor Global ${formData.Nome}`,
-          desc: `Respostas do formulário: ${JSON.stringify(formData, null, 2)}`,
+          page: 'Perfil do Investidor Global',
+          user: {
+            Nome: formData.Nome,
+            Email: formData.Email,
+            Phone: formData.Phone,
+            investeNaXP: formData.investeNaXP,
+            quantoTemInvestido: formData.quantoTemInvestido,
+            investeNoExterior: formData.investeNoExterior,
+          },
+          simulation: {
+            'Você investe fora do Brasil?': formData.doYouInvest,
+            'Qual seu objetivo financeiro?': formData.whyYourObjectiveFinance,
+            'Horizonte de investimento': formData.investmentHorizon,
+            'Como reage a perdas?': formData.reactionToLosses,
+            'Conhecimento em investimentos internacionais': formData.internationalInvestmentKnowledge,
+            'Possui investimentos fora do Brasil?': formData.investmentsOutsideBrazil,
+            'Percentual fora do Brasil?': formData.percentageInvestmentOutsideBrazil,
+            'Preocupação com investir fora do Brasil': formData.concernInvestingOutsideBrazil,
+            'Fator mais importante na estratégia': formData.importantInvestmentStrategy,
+            'Setores de interesse': formData.investmentInterestSectors,
+            'Planeja sair do país?': formData.planToLeaveCountry,
+            'Valor a investir internacionalmente': formData.investmentAmount,
+          },
         }),
       })
 
-      if (response.ok) {
-        window.open('/Guia_Rápido_InvestGlobal.pdf', '_blank')
-        setTimeout(() => {
-          window.location.href = '/obrigado'
-        }, 2000)
-      } else {
-        alert('Erro ao enviar formulário.')
+      if (!response.ok) {
+        const error = await response.json()
+        console.error('Erro ao enviar e-mail:', error)
+        alert('Erro ao enviar seus dados.')
+        return
       }
+
+      // Se tudo der certo, abrir o PDF e redirecionar
+      window.open('/Guia_Rápido_InvestGlobal.pdf', '_blank')
+      setTimeout(() => {
+        window.location.href = '/obrigado'
+      }, 2000)
     } catch (error) {
-  console.error('Erro ao enviar formulário:', error)
-  alert('Erro na requisição.')
-}
+      console.error('Erro ao enviar e-mail:', error)
+      alert('Erro ao enviar o formulário.')
+    }
+  }
+
+  const handleFinalSubmit = () => {
+    handleSubmit()
   }
 
   return (
@@ -87,224 +112,329 @@ export default function ProfileInvestor() {
             </p>
           </div>
 
-          {/* 1. Você já investe, investiu ou conhece ações, FIIs, fundos ou renda fixa? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Você já investe, investiu ou conhece ações, FIIs, fundos, ou renda fixa?</legend>
-            {[
-              'Conheço pouco, estou indeciso para investir',
-              'Sim, conheço a maioria e preciso investir',
-              'Sim, conheço e já sou investidor (mesmo que seja apenas no Brasil)',
-            ].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="doYouInvest" onChange={() => handleChange('doYouInvest?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+          
 
-          {/* 2. Qual seu principal objetivo financeiro? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Qual seu principal objetivo financeiro?</legend>
-            {['Renda passiva', 'Formação de patrimônio', 'Proteção e evolução de patrimônio'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="whyYourObjectiveFinance?" onChange={() => handleChange('whyYourObjectiveFinance?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold">Preencha seu perfil</h2>
 
-          {/* 3. Qual seu horizonte de investimento? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Qual seu horizonte de investimento?</legend>
-            {['Curto prazo: até 2 anos', 'Médio prazo: de 2 a 5 anos', 'Longo prazo: acima de 5 anos'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="investmentHorizon?" onChange={() => handleChange('investmentHorizon?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 1 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">Você investe fora do Brasil?</legend>
+              {[
+                'Não, não tenho investimentos',
+                'Não, mas quero começar',
+                'Sim, pouco',
+                'Sim, a maior parte',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="doYouInvest"
+                    onChange={() => handleChange('doYouInvest', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 4. Como você reage diante de perdas financeiras? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Como você reage diante de perdas financeiras?</legend>
-            {[
-              'Entre medo e pânico, sensação de “não sirvo pra isso”',
-              'Preocupação controlada, esperança de seja só temporário',
-              'Indiferente, sabe que perdas fazem parte e pode esperar a recuperação',
-            ].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="reactionToLosses?" onChange={() => handleChange('reactionToLosses?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 2 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">Qual seu objetivo financeiro?</legend>
+              {[
+                'Proteção patrimonial',
+                'Geração de renda passiva',
+                'Aposentadoria no exterior',
+                'Mudança de residência fiscal',
+                'Diversificação geográfica',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="whyYourObjectiveFinance"
+                    onChange={() => handleChange('whyYourObjectiveFinance', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 5. Qual seu nível de conhecimento sobre investimentos internacionais? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Qual seu nível de conhecimento sobre investimentos internacionais?</legend>
-            {[
-              'Ainda não investe ou está começando a investir, estudando e reunindo informações sobre investimentos',
-              'Entende alguns termos e conceitos, já investe há algum tempo no Brasil, mas ainda tem algumas dúvidas',
-              'Investe há um bom tempo, inclusive no exterior em várias classes de ativos; está familiarizado com a maior parte dos termos, conceitos e estratégias',
-            ].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="internationalInvestmentKnowledge?" onChange={() => handleChange('internationalInvestmentKnowledge?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 3 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">Horizonte de investimento:</legend>
+              {[
+                'Curto prazo (menos de 3 anos)',
+                'Médio prazo (3 a 7 anos)',
+                'Longo prazo (mais de 7 anos)',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="investmentHorizon"
+                    onChange={() => handleChange('investmentHorizon', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 6. Você já tem investimentos fora do país? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Você já tem investimentos fora do país?</legend>
-            {['Não, estou começando a me informar', 'Não, e tenho a sensação de que estou “atrasado”', 'Sim, e pretendo aumentar o envio de remessas para lá'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="investmentsOutsideBrazil?" onChange={() => handleChange('investmentsOutsideBrazil?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 4 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">Como você reage a perdas?</legend>
+              {[
+                'Vendo oportunidade (compra mais)',
+                'Reavalia sua estratégia',
+                'Reduz exposição',
+                'Retira recursos',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="reactionToLosses"
+                    onChange={() => handleChange('reactionToLosses', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 7. Quanto do seu patrimônio você gostaria de ter fora do Brasil? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Quanto do seu patrimônio você gostaria de ter fora do Brasil?</legend>
-            {['Pouco, no máximo 10%', 'Algo entre 10% e 20%', 'Pelo menos 35%'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="percentageInvestmentOutsideBrazil?" onChange={() => handleChange('percentageInvestmentOutsideBrazil?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 5 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                Qual seu conhecimento em investimentos internacionais?
+              </legend>
+              {[
+                'Básico',
+                'Intermediário',
+                'Avançado',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="internationalInvestmentKnowledge"
+                    onChange={() => handleChange('internationalInvestmentKnowledge', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 8. Qual sua maior preocupação em investir fora do Brasil? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Qual sua maior preocupação em investir fora do Brasil?</legend>
-            {[
-              'Uma desvalorização do dólar',
-              'As transferências internacionais, complexidade e segurança',
-              'Não conhecer as garantias de que meu patrimônio está seguro',
-            ].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="concernInvestingOutsideBrazil?" onChange={() => handleChange('concernInvestingOutsideBrazil?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+{/* Campo 6 */}
+<fieldset className="space-y-2">
+  <legend className="font-semibold">Você já possui investimentos no exterior?</legend>
+  {[
+    'Não, nunca investi',
+    'Sim, alguns',
+    'Sim, muitos',
+  ].map((opt) => (
+    <label key={opt} className="flex items-center gap-2 mt-2">
+      <input
+        type="radio"
+        name="investmentsOutsideBrazil"
+        onChange={() => handleChange('investmentsOutsideBrazil', opt)}
+      />
+      <span>{opt}</span>
+    </label>
+  ))}
+</fieldset>
 
-          {/* 9. O que você considera mais importante em uma estratégia de investimento? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">O que você considera mais importante em uma estratégia de investimento?</legend>
-            {['Cuidado e persistência', 'Estratégia clara e conhecimento', 'Informação e arrojo'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="importantInvestmentStrategy?" onChange={() => handleChange('importantInvestmentStrategy?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 7 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                Quanto do seu patrimônio você gostaria de ter fora do Brasil?
+              </legend>
+              {[
+                'Menos de 10%',
+                'Entre 10% e 30%',
+                'Entre 30% e 60%',
+                'Mais de 60%',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="percentageInvestmentOutsideBrazil"
+                    onChange={() => handleChange('percentageInvestmentOutsideBrazil', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 10. Em quais setores você tem mais interesse? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Em quais setores você tem mais interesse?</legend>
-            {['Mineração, materiais, agronegócio', 'Financeiro, saúde, bens de consumo', 'Tecnologia, defesa, aeroespacial'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="investmentInterestSectors?" onChange={() => handleChange('investmentInterestSectors?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 8 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                Você se preocupa com a questão de investir fora do Brasil?
+              </legend>
+              {[
+                'Não me preocupo',
+                'Estou ciente, mas não sei como resolver',
+                'Já estou buscando soluções',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="concernInvestingOutsideBrazil"
+                    onChange={() => handleChange('concernInvestingOutsideBrazil', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 11. Você pretende deixar o país futuramente? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Você pretende deixar o país futuramente?</legend>
-            {['Não penso em sair do meu país', 'Se for preciso, mas tenho de pensar muito bem nisso', 'Sim, estou planejando minha saída'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="planToLeaveCountry?" onChange={() => handleChange('planToLeaveCountry?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 9 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                O que é mais importante na sua estratégia?
+              </legend>
+              {[
+                'Segurança jurídica',
+                'Facilidade operacional',
+                'Isenção tributária',
+                'Diversificação geográfica',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="importantInvestmentStrategy"
+                    onChange={() => handleChange('importantInvestmentStrategy', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* 12. Quanto você tem disponível para investir? */}
-          <fieldset className="space-y-2">
-            <legend className="text-xl font-semibold">Quanto você tem disponível para investir?</legend>
-            {['Entre R$ 100.000 e R$ 300.000', 'Entre R$ 301.000 e R$ 500.000', 'Mais de R$ 500.000'].map((opt) => (
-              <label key={opt} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="investmentAmount?" onChange={() => handleChange('investmentAmount?', opt)} />
-                <span>{opt}</span>
-              </label>
-            ))}
-          </fieldset>
+            {/* Campo 10 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                Em quais setores tem interesse para investir?
+              </legend>
+              {[
+                'Imóveis nos EUA',
+                'ETFs globais',
+                'Startups internacionais',
+                'Fundos offshore',
+                'Outros',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="investmentInterestSectors"
+                    onChange={() => handleChange('investmentInterestSectors', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
 
-          {/* Botão Finalizar */}
-          <div className="flex justify-center pt-6">
+            {/* Campo 11 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                Você planeja deixar o Brasil permanentemente?
+              </legend>
+              {[
+                'Não',
+                'Talvez',
+                'Sim, em até 3 anos',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="planToLeaveCountry"
+                    onChange={() => handleChange('planToLeaveCountry', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
+
+            {/* Campo 12 */}
+            <fieldset className="space-y-2">
+              <legend className="font-semibold">
+                Qual valor você pretende investir no exterior?
+              </legend>
+              {[
+                'Até US$ 50k',
+                'De US$ 50k a US$ 150k',
+                'De US$ 150k a US$ 500k',
+                'Acima de US$ 500k',
+              ].map((opt) => (
+                <label key={opt} className="flex items-center gap-2 mt-2">
+                  <input
+                    type="radio"
+                    name="investmentAmount"
+                    onChange={() => handleChange('investmentAmount', opt)}
+                  />
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </fieldset>
+
+            {/* Botão final */}
             <button
               onClick={() => setShowModal(true)}
-              className="bg-[#FF0C34] text-white px-6 py-3 rounded-lg text-lg font-medium hover:opacity-80 transition"
+              className="mt-6 bg-[#FF0C34] text-white px-6 py-3 rounded-lg font-medium hover:opacity-80 transition"
             >
-              Finalizar preenchimento
+              Enviar e Baixar Guia
             </button>
           </div>
         </div>
-      </section>
 
-      {/* Modal Final */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4">
-          <div className="relative w-full max-w-md bg-[#0C1D2C] text-white rounded-lg shadow-xl p-6">
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-sm text-white bg-[#FF0C34] hover:opacity-80 px-3 py-1 rounded-md"
-            >
-              Fechar
-            </button>
-            <h2 className="text-2xl font-bold mb-6">Identifique-se para receber o material</h2>
-            <div className="space-y-4">
-              <InputLabel
+        {/* Modal com formulário */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-[99]">
+            <div className="relative w-full max-w-xl bg-[#0C1D2C] text-white rounded-lg shadow-xl p-6 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-thumb-[#FF0C34]/60">
+              <h2 className="text-2xl font-bold mb-6">Identifique-se para receber o material</h2>
+              <div className="space-y-4">
+                <InputLabel
                   type="text"
-                labelTitle="Seu nome"
-                placeholder="Digite seu nome"
-                onChange={(e) => handleChange('Nome', e.target.value)}
-              />
-              <InputLabel
+                  labelTitle="Seu nome"
+                  placeholder="Digite seu nome"
+                  onChange={(e) => handleChange('Nome', e.target.value)}
+                />
+                <InputLabel
                   type="email"
-                labelTitle="E-mail"
-                placeholder="Digite seu e-mail"
-                onChange={(e) => handleChange('Email', e.target.value)}
-              />
-              <InputLabel
+                  labelTitle="E-mail"
+                  placeholder="Digite seu e-mail"
+                  onChange={(e) => handleChange('Email', e.target.value)}
+                />
+                <InputLabel
                   type="tel"
-                labelTitle="Telefone"
-                placeholder="(xx) 9xxxx-xxxx"
-                onChange={(e) => handleChange('Phone', e.target.value)}
-              />
-            </div>
-            <div className="space-y-3 mt-4 text-sm">
-              <label className="flex gap-2 items-start">
-                <input type="checkbox" />
-                <span>Estou de acordo com o envio de comunicações, termos e condições e política da Invest Global US</span>
-              </label>
-              <label className="flex gap-2 items-start">
-                <input type="checkbox" />
-                <span>Estou de acordo com a política de privacidade da Invest Global US</span>
-              </label>
-            </div>
-            <div className="flex justify-end gap-4 mt-6">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 rounded-md bg-gray-500 hover:bg-gray-600 transition"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleSubmit}
-                className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 transition"
-              >
-                Enviar e Baixar PDF
-              </button>
+                  labelTitle="Telefone"
+                  placeholder="(xx) 9xxxx-xxxx"
+                  onChange={(e) => handleChange('Phone', e.target.value)}
+                />
+
+                {/* Termos */}
+                <div className="space-y-3 mt-4 text-sm">
+                  <label className="flex gap-2 items-start">
+                    <input type="checkbox" required />
+                    Estou de acordo com o envio de comunicações, termos e condições e política da Invest Global US
+                  </label>
+                  <label className="flex gap-2 items-start">
+                    <input type="checkbox" required />
+                    Estou de acordo com a política de privacidade da Invest Global US
+                  </label>
+                </div>
+
+                {/* Botões do Modal */}
+                <div className="flex justify-end gap-4 mt-6">
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-4 py-2 rounded-md bg-gray-500 hover:bg-gray-600 transition"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleFinalSubmit}
+                    className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-700 transition"
+                  >
+                    Enviar e Baixar PDF
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </section>
     </>
   )
 }

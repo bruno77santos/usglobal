@@ -11,7 +11,7 @@ interface FormData {
   quantoTemInvestido: string;
   investeNoExterior: string;
 }
-
+ 
 export default function Form() {
   const [sendForm, setSendForm] = useState(false);
 
