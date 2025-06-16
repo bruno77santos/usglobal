@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     // Envia e-mail
     const result = await resend.emails.send({
       from: 'InvestGlobal <contato@caulfieldco.com.br>',
-      to: ['brsantos88@yahoo.com.br'],
+      to: ['contato@investglobal.us'],
       subject: `[Formulário] ${page} - ${user.Nome || 'Usuário'} `,
       html: emailHtml,
     })
